@@ -6,7 +6,7 @@
    *  simple filter chain
    */
 
-class Elizabethae{
+class elizabethae{
     public $filters = array();
     public $plugin_dir = "";
     public $plugin_classes = array();

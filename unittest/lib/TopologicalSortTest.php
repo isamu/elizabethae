@@ -62,7 +62,9 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
                                     "required" => array());
 
         $this->ts->setNode($classes);        
-        var_dump($this->ts->sort());
+        $res = $this->ts->sort();
+        $this->assertEquals($res, array("init", "load_site", "load_page", "getUser"));
+        var_dump($res);
     }
 
     /**

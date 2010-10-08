@@ -7,7 +7,9 @@ class TopologicalSort{
     }
 
     function setNode($classes = array()){
+        $this->nodes = array();
         foreach($classes  as $class_name => $class){
+            $classes["root"]["required"][] = $class_name;
             foreach((array) $class["require"] as $require){
                 $this->set_required($classes, $require, $class_name);
             }
@@ -64,7 +66,8 @@ class TopologicalSort{
             }
             unset($this->nodes[$n['name']]);
         }
-        return $sorted;
+        unset($sorted[0]);
+        return array_values($sorted);
     }
 
     function getRootNodes($nodes){

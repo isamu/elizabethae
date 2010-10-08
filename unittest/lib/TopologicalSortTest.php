@@ -52,19 +52,43 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
      */
     public function testSort()
     {
-        $classes['init'] = array("require" => array(),
-                                 "required" => array());
-        $classes['load_site'] = array("require" => array("init"),
-                                      "required" => array("load_page"));
-        $classes['load_page'] = array("required" => array("getUser"),
-                                      "require" => array());
-        $classes['getUser'] = array("require" => array(),
-                                    "required" => array());
-
+        $classes = array('init' => array("require" => array(),
+                                         "required" => array()),
+                         'load_site' => array("require" => array("init"),
+                                              "required" => array("load_page")),
+                         'load_page' => array("required" => array("getUser"),
+                                              "require" => array()),
+                         'getUser' => array("require" => array(),
+                                            "required" => array()));
+                         
         $this->ts->setNode($classes);        
         $res = $this->ts->sort();
         $this->assertEquals($res, array("init", "load_site", "load_page", "getUser"));
         var_dump($res);
+        $classes = array("getUser" => array("require" => array(),
+                                            "required" => array()),
+                         "init" => array("require" => array(),
+                                         "required" => array()),
+                         "hoge" => array("require" => array(),
+                                         "required" => array()));
+
+        $this->ts->setNode($classes);        
+        $res = $this->ts->sort();
+        var_dump($res);
+
+        $classes = array('init' => array("require" => array(),
+                                         "required" => array()),
+                         'load_site' => array("require" => array("init"),
+                                              "required" => array()),
+                         'load_page' => array("required" => array("getUser"),
+                                              "require" => array()),
+                         'getUser' => array("require" => array(),
+                                            "required" => array()));
+
+        $this->ts->setNode($classes);        
+        $res = $this->ts->sort();
+        var_dump($res);
+
     }
 
     /**

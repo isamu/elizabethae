@@ -9,17 +9,21 @@
 class elizabethae{
     public $filters = array();
     public $plugin_dir = "";
+    public $plugin_class_names = array();
     public $plugin_classes = array();
-    public $plugin_filters = array("prepend_before_filter", "before_filter", "prepend_after_filter", "after_filter");
+    public $plugin_filter = array();
 
     //load plugin and execute method
     function __construct($methodName){
         $files = $this->find_plugin();
         $this->read_plugin($files);
-        foreach($this->plugin_classes as $class){
+        foreach($this->plugin_class_names as $class){
             $this->initialize_plugin($class, $methodName);
         }
+        //var_Dump($this->plugin_filter);
+        //$this->sort_filter("before");
         $this->{$methodName}();
+        //$this->sort_filter("after");
     }
     
     //find plugin files from plugin_dir, and return files
@@ -35,7 +39,7 @@ class elizabethae{
     function read_plugin($files){
         foreach((array) $files as $file){
             require_once $file;
-            $this->plugin_classes[] = preg_replace("/\.php$/","", basename($file));
+            $this->plugin_class_names[] = preg_replace("/\.php$/","", basename($file));
         }
     }
 
@@ -49,11 +53,12 @@ class elizabethae{
         if(method_exists($class, "init_data")){
             $class->init_data($this->data);
         }
-        foreach($this->plugin_filters as $filter){
+        foreach(array("before_filter", "after_filter") as $filter){
             if(method_exists($class, $filter)){
                 $this->plugin_filter[$filter][] = $class;
             }
         }
+        $this->plugin_classes[] = $class;
     }
 
     //get plugin initialize parametor from controller

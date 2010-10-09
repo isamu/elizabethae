@@ -11,7 +11,8 @@ class elizabethae{
     public $plugin_dir = "";
     public $plugin_class_names = array();
     public $plugin_classes = array();
-    public $plugin_filter = array();
+    public $before_filter = array();
+    public $after_filter = array();
 
     //load plugin and execute method
     function __construct($methodName){
@@ -20,12 +21,42 @@ class elizabethae{
         foreach($this->plugin_class_names as $class){
             $this->initialize_plugin($class, $methodName);
         }
-        //var_Dump($this->plugin_filter);
+        $this->set_filter("before_filter", $methodName);
+        var_Dump($this->filters);
         //$this->sort_filter("before");
         $this->{$methodName}();
         //$this->sort_filter("after");
     }
     
+    function set_filter($name, $methodName){
+        foreach((array) $this->{$name} as $filter_name => $filter){
+            if(is_array($filter)){
+                if($this->is_set_filter($filter, $methodName)){
+                    $this->filters["before_filter"][] = array("type" => "method",
+                                                              "name" => $filter_name,
+                                                              "value" => $filter);
+                }
+            }else{
+                $this->filters["before_filter"][] = array("type" => "method",
+                                                          "name" =>  $filter,
+                                                          "value" => array("require" => array()));
+                
+            }
+        }
+    }
+    function is_set_filter($filter, $methodName){
+        if(is_array($filter['only'])){
+            if(!in_array($methodName, $filter['only'])){
+                return false;
+            }
+        }
+        if(is_array($filter['expect'])){
+            if(in_array($methodName, $filter['expect'])){
+                return false;
+            }
+        }
+        return true;
+    }
     //find plugin files from plugin_dir, and return files
     function find_plugin(){
         $files = array();
@@ -55,7 +86,8 @@ class elizabethae{
         }
         foreach(array("before_filter", "after_filter") as $filter){
             if(method_exists($class, $filter)){
-                $this->plugin_filter[$filter][] = $class;
+                $this->filters[$filter][] = array("type" =>"class",
+                                                  "class" => $class);
             }
         }
         $this->plugin_classes[] = $class;

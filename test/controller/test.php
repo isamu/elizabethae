@@ -3,9 +3,11 @@ require_once("../../core/elizabethae.php");
 
 class testController extends Elizabethae{
     var $before_filter = array("only_aaa" =>
-                               array("only" => array("aa", "cc"),
+                               array("only" => array("aa", "cc", "TEST"),
                                      "expect" => array("aa", "cc"),
-                                     "require" => array("AA", "cc")));
+                                     "require" => array("cont_aa", "cont_cc")),
+                               "cont_aa",
+                               "cont_cc");
     
 
 
@@ -21,7 +23,10 @@ class testController extends Elizabethae{
         $this->test2Method();
         echo "doneTEST";
     }
-
+    function cont_aa(){
+    }
+    function cont_cc(){
+    }
 }    
 
 new testController("TEST");

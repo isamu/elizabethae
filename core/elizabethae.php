@@ -85,8 +85,7 @@ class elizabethae{
             if(method_exists($class, $filter)){
                 $this->filters[$filter][$class_name] = array("type" =>"class",
                                                              "require" => $class->{$filter}["require"],
-                                                             "required" => $class->{$filter}["required"],
-                                                             "class" => $class);
+                                                             "required" => $class->{$filter}["required"]);
             }
 
         }

@@ -32,15 +32,12 @@ class elizabethae{
         foreach((array) $this->{$name} as $filter_name => $filter){
             if(is_array($filter)){
                 if($this->is_set_filter($filter, $methodName)){
-                    $this->filters["before_filter"][] = array("type" => "method",
-                                                              "name" => $filter_name,
-                                                              "value" => $filter);
+                    $this->filters[$name][$filter_name] = array("type" => "method",
+                                                                "require" => $filter['require'],
+                                                                "required" => $filter['required']);
                 }
             }else{
-                $this->filters["before_filter"][] = array("type" => "method",
-                                                          "name" =>  $filter,
-                                                          "value" => array("require" => array()));
-                
+                $this->filters[$name][$filter] = array("type" => "method");
             }
         }
     }
@@ -86,9 +83,12 @@ class elizabethae{
         }
         foreach(array("before_filter", "after_filter") as $filter){
             if(method_exists($class, $filter)){
-                $this->filters[$filter][] = array("type" =>"class",
-                                                  "class" => $class);
+                $this->filters[$filter][$class_name] = array("type" =>"class",
+                                                             "require" => $class->{$filter}["require"],
+                                                             "required" => $class->{$filter}["required"],
+                                                             "class" => $class);
             }
+
         }
         $this->plugin_classes[] = $class;
     }

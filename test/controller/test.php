@@ -1,11 +1,13 @@
 <?PHP
 require_once("../../core/elizabethae.php");
+require_once("../../lib/TopologicalSort.php");
 
 class testController extends Elizabethae{
     var $before_filter = array("only_aaa" =>
                                array("only" => array("aa", "cc", "TEST"),
                                      "expect" => array("aa", "cc"),
-                                     "require" => array("cont_aa", "cont_cc")),
+                                     "require" => array("cont_aa", "cont_cc"),
+                                     "required" => array("cont_zz")),
                                "cont_aa",
                                "cont_cc");
     
@@ -26,6 +28,8 @@ class testController extends Elizabethae{
     function cont_aa(){
     }
     function cont_cc(){
+    }
+    function cont_zz(){
     }
 }    
 

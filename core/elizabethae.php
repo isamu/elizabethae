@@ -22,10 +22,16 @@ class elizabethae{
             $this->initialize_plugin($class, $methodName);
         }
         $this->set_filter("before_filter", $methodName);
-        var_Dump($this->filters);
-        //$this->sort_filter("before");
+        $this->sort_filter("before_filter");
         $this->{$methodName}();
         //$this->sort_filter("after");
+    }
+    function sort_filter($name){
+        $this->ts = new TopologicalSort;
+        $this->ts->setNode($this->filters[$name]);
+        $res = $this->ts->sort();
+        //var_dump($this->filters[$name]);
+        var_dump($res);
     }
     
     function set_filter($name, $methodName){

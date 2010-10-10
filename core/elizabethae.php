@@ -11,55 +11,21 @@ class elizabethae{
     public $plugin_dir = "";
     public $plugin_class_names = array();
     public $plugin_classes = array();
-    public $before_filter = array();
-    public $after_filter = array();
 
     //load plugin and execute method
-    function __construct($methodName){
+    function __construct($method_name){
         $files = $this->find_plugin();
         $this->read_plugin($files);
         foreach($this->plugin_class_names as $class){
-            $this->initialize_plugin($class, $methodName);
+            $this->initialize_plugin($class, $method_name);
         }
-        $this->set_filter("before_filter", $methodName);
-        $this->sort_filter("before_filter");
-        $this->{$methodName}();
-        //$this->sort_filter("after");
+        $this->set_filter("before_filter", $method_name);
+        $this->apply_filter("before_filter", $this->sort_filter("before_filter"), $method_name);
+        $this->{$method_name}();
+        $this->set_filter("after_filter", $method_name);
+        $this->apply_filter("after_filter", $this->sort_filter("after_filter"), $method_name);
     }
-    function sort_filter($name){
-        $this->ts = new TopologicalSort;
-        $this->ts->setNode($this->filters[$name]);
-        $res = $this->ts->sort();
-        //var_dump($this->filters[$name]);
-        var_dump($res);
-    }
-    
-    function set_filter($name, $methodName){
-        foreach((array) $this->{$name} as $filter_name => $filter){
-            if(is_array($filter)){
-                if($this->is_set_filter($filter, $methodName)){
-                    $this->filters[$name][$filter_name] = array("type" => "method",
-                                                                "require" => $filter['require'],
-                                                                "required" => $filter['required']);
-                }
-            }else{
-                $this->filters[$name][$filter] = array("type" => "method");
-            }
-        }
-    }
-    function is_set_filter($filter, $methodName){
-        if(is_array($filter['only'])){
-            if(!in_array($methodName, $filter['only'])){
-                return false;
-            }
-        }
-        if(is_array($filter['expect'])){
-            if(in_array($methodName, $filter['expect'])){
-                return false;
-            }
-        }
-        return true;
-    }
+
     //find plugin files from plugin_dir, and return files
     function find_plugin(){
         $files = array();
@@ -95,7 +61,7 @@ class elizabethae{
             }
 
         }
-        $this->plugin_classes[] = $class;
+        $this->plugin_classes[$class_name] = $class;
     }
 
     //get plugin initialize parametor from controller
@@ -105,22 +71,62 @@ class elizabethae{
                            (array) $this->{$plugin_name."_only_".$method_name},
                            (array) $this->{$plugin_name."_with_default_only_".$method_name});
     }
-    function call_method($callMethodName, $methodName){
-        $args = $this->get_method_param_from_controller($callMethodName, $methodName);
+    function call_method($callMethodName, $method_name){
+        $args = $this->get_method_param_from_controller($callMethodName, $method_name);
         $this->{$callMethodName}($args);
     }
+
     function get_method_param_from_controller($method_name, $from_method_name){
         return array_merge((array) $this->{$method_name},
                            (array) $this->{$method_name."_with_default"},
                            (array) $this->{$method_name."_from_".$from_method_name."_with_default"});
     }
     
-    function call_filter(){
+    function set_filter($name, $method_name){
+        foreach((array) $this->{$name} as $filter_name => $filter){
+            if(is_array($filter)){
+                if($this->is_set_filter($filter, $method_name)){
+                    $this->filters[$name][$filter_name] = array("type" => "method",
+                                                                "require" => $filter['require'],
+                                                                "required" => $filter['required']);
+                }
+            }else{
+                $this->filters[$name][$filter] = array("type" => "method");
+            }
+        }
+    }
+
+    function is_set_filter($filter, $method_name){
+        if(is_array($filter['only'])){
+            if(!in_array($method_name, $filter['only'])){
+                return false;
+            }
+        }
+        if(is_array($filter['expect'])){
+            if(in_array($method_name, $filter['expect'])){
+                return false;
+            }
+        }
+        return true;
     }
     
-    function __get($param){
-        //echo $param;
+    function sort_filter($name){
+        $this->ts = new TopologicalSort;
+        $this->ts->setNode($this->filters[$name]);
+        return $res = $this->ts->sort();
     }
+
+    function apply_filter($name, $sorted_filter, $method_name){
+        foreach($sorted_filter as $filter){
+            if($this->filters[$name][$filter]['type'] == "class"){
+                $args = $this->get_method_param_from_controller($filter, $method_name);
+                $this->plugin_classes[$filter]->{$name}($args);
+            }else if($this->filters[$name][$filter]['type'] == "method"){
+                $this->call_method($filter, $method_name);
+            }
+        }
+    }
+
     function __call($function, $args) {
         foreach ($this->plugin_classes as $class) {
             if (method_exists($class, $function)) {

@@ -9,7 +9,8 @@ class testController extends Elizabethae{
                                      "require" => array("cont_aa", "cont_cc"),
                                      "required" => array("cont_zz")),
                                "cont_aa",
-                               "cont_cc");
+                               "cont_cc",
+                               "cont_zz");
     
 
 
@@ -17,6 +18,7 @@ class testController extends Elizabethae{
         $this->plugin_dir = realpath(__DIR__."/../plugin/");
         parent::__construct($methodName);
     }            
+    
     var $test_with_default = array("A");
     var $test_only_TEST = array("B");
     var $test_with_default_only_TEST = array("C");
@@ -25,11 +27,17 @@ class testController extends Elizabethae{
         $this->test2Method();
         echo "doneTEST";
     }
+    function only_aaa(){
+        echo "func only_aaa\n";
+    }
     function cont_aa(){
+        echo "func cont_aa\n";
     }
     function cont_cc(){
+        echo "func cont_cc\n";
     }
     function cont_zz(){
+        echo "func cont_zz\n";
     }
 }    
 

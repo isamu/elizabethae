@@ -8,10 +8,10 @@ class test2 extends pluginBase{
         $this->param = $param;
     }
     function before_filter(){
+        echo "test2!!!\n";
     }
 
     function test2Method(){
-        echo "test2!!!\n";
     }
 }
 ?>

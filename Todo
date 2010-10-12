@@ -8,4 +8,12 @@
  - Imprement Model and View
  - Write document.
  - Create Demo App (wiki?)
+   - rich wiki??
+ - View must support layout.
 
+ - stack filter
+   like application_before_filter, common_before_filter
+ - support content_type
+
+    /test/action.json
+    /test/action.xml

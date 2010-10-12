@@ -1,0 +1,11 @@
+ - elizabethae core
+  -  when require plugin(or method) not found, become error.
+  -  when there are same filter name, become error.
+ - TopologicalSort
+  -  behavior when loop.
+ - Write unit test code.
+ - Modefy dispatche.
+ - Imprement Model and View
+ - Write document.
+ - Create Demo App (wiki?)
+ 

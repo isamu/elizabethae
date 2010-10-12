@@ -5,6 +5,7 @@
    *  mix-in function like ruby
    *  simple filter chain
    */
+require_once ELIZABETHAE_BASE_DIR."/lib/TopologicalSort.php";
 
 class elizabethae{
     public $filters = array();
@@ -14,6 +15,7 @@ class elizabethae{
 
     //load plugin and execute method
     function __construct($method_name){
+        $this->method_name = $method_name;
         $files = $this->find_plugin();
         $this->read_plugin($files);
         foreach($this->plugin_class_names as $class){
@@ -29,7 +31,7 @@ class elizabethae{
     //find plugin files from plugin_dir, and return files
     function find_plugin(){
         $files = array();
-        foreach(glob($this->plugin_dir."/*.php") as $file){
+        foreach(glob(APP_PLUGIN_DIR."/*.php") as $file){
             $files[] = $file;
         }
         return $files;

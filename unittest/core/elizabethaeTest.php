@@ -1,7 +1,7 @@
 <?php
 require_once 'PHPUnit/Framework.php';
 
-require_once 'elizabethae.php';
+require_once '../../core/elizabethae.php';
 
 /**
  * Test class for elizabethae.

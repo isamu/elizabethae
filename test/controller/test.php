@@ -1,6 +1,9 @@
 <?PHP
+define("ELIZABETHAE_BASE_DIR", realpath(__DIR__."/../../"));
+define("APP_BASE_DIR", realpath(__DIR__."/../"));
+define("APP_PLUGIN_DIR", realpath(__DIR__."/../plugin/"));
+
 require_once("../../core/elizabethae.php");
-require_once("../../lib/TopologicalSort.php");
 
 class testController extends Elizabethae{
     var $before_filter = array("only_aaa" =>

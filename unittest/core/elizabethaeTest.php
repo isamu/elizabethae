@@ -1,7 +1,8 @@
 <?php
+define("ELIZABETHAE_BASE_DIR", realpath(__DIR__."/../../"));
 require_once 'PHPUnit/Framework.php';
 
-require_once '../../core/elizabethae.php';
+require_once ELIZABETHAE_BASE_DIR.'/core/elizabethae.php';
 
 /**
  * Test class for elizabethae.
@@ -23,7 +24,7 @@ class elizabethaeTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new elizabethae;
+        $this->object = new elizabethae("test");
     }
 
     /**

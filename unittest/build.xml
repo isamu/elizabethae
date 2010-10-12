@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="elizabethae class" basedir="." default="test">
+
+  <target name="test">
+    <phpunit3 haltonfailure="true" printsummary="true">
+      <batchtest>
+        <fileset dir="./core">
+          <include name="*Test.php"/>
+        </fileset>
+        <fileset dir="./controller">
+          <include name="*Test.php"/>
+        </fileset>
+      </batchtest>
+    </phpunit3>
+  </target>
+
+</project>

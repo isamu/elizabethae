@@ -8,7 +8,7 @@ class testController extends ApplicationController{
     function indexAction(){
         $this->debug("this is index action");
         echo "do Action!!";
-        require_once(APP_BASE_DIR."/view/test/index.php");
+        //require_once(APP_BASE_DIR."/view/test/index.php");
     }
 
 }

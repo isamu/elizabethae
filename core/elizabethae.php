@@ -31,7 +31,7 @@ class elizabethae{
     //find plugin files from plugin_dir, and return files
     function find_plugin(){
         $files = array();
-        foreach(glob(APP_PLUGIN_DIR."/*.php") as $file){
+        foreach(glob($this->plugin_dir."/*.php") as $file){
             $files[] = $file;
         }
         return $files;

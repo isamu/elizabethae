@@ -6,6 +6,7 @@ class ApplicationController extends elizabethae{
     public $after_filter = array();
 
     function __construct($method_name){
+        $this->plugin_dir = realpath(__DIR__."/../plugin/");
         parent::__construct($method_name);
     }
 }

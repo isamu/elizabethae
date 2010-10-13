@@ -1,1 +1,1 @@
-<?= "AAA" ?>
+<?= "this is from template" ?>

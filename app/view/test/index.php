@@ -1,1 +1,1 @@
-<?= "this is from template" ?>
+<?= "this is from index" ?><br />

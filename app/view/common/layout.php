@@ -1,7 +1,7 @@
 <html>
 <body>
 <h2>
-<?= "this is from test layout template" ?>
+<?= "this is from common layout template" ?>
 </h2>
 <? $this->render_body() ?>
 

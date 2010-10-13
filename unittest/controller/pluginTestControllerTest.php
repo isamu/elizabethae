@@ -25,7 +25,7 @@ class pluginTestControllerTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new pluginTestController("test");
+        $this->object = new pluginTestController("indexAction");
     }
 
     /**
@@ -38,26 +38,16 @@ class pluginTestControllerTest extends PHPUnit_Framework_TestCase
     {
     }
 
-    /**
-     * @todo Implement testFind_plugin().
-     */
-    public function testFind_plugin()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
 
     /**
      * @todo Implement testRead_plugin().
      */
     public function testRead_plugin()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertEquals($this->object->get_testData(),
+                            array("test plugin before filter",
+                                  "test2 plugin before filter",
+                                  "test3 plugin before filter"));
     }
 
 }

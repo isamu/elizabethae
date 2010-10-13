@@ -113,13 +113,16 @@ class elizabethae{
     }
     
     function sort_filter($name){
-        $this->ts = new TopologicalSort;
-        $this->ts->setNode($this->filters[$name]);
-        return $res = $this->ts->sort();
+        if(isset($this->filters[$name])){
+            $this->ts = new TopologicalSort;
+            $this->ts->setNode($this->filters[$name]);
+            return $res = $this->ts->sort();
+        }
+        return array();
     }
 
     function apply_filter($name, $sorted_filter, $method_name){
-        foreach($sorted_filter as $filter){
+        foreach((array) $sorted_filter as $filter){
             if($this->filters[$name][$filter]['type'] == "class"){
                 $args = $this->get_method_param_from_controller($filter, $method_name);
                 $this->plugin_classes[$filter]->{$name}($args);

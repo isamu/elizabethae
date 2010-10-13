@@ -10,8 +10,10 @@ class TopologicalSort{
         $this->nodes = array();
         foreach($classes  as $class_name => $class){
             $classes["root"]["required"][] = $class_name;
-            foreach((array) $class["require"] as $require){
-                $this->set_required($classes, $require, $class_name);
+            if(isset($class["require"])){
+                foreach((array) $class["require"] as $require){
+                    $this->set_required($classes, $require, $class_name);
+                }
             }
         }
         
@@ -83,8 +85,10 @@ class TopologicalSort{
     function getDependencyList($classes = array()){
         $output = array();
         foreach($classes as $classname => $class){
-            foreach((array) $class['required'] as $required){
-                $output[] = array($classname => $required);
+            if(isset($class['required'])){
+                foreach((array) $class['required'] as $required){
+                    $output[] = array($classname => $required);
+                }
             }
         }
         return $output;

@@ -19,6 +19,9 @@ class render_php{
     function render_json(){
         echo json_encode(array("test" => "hoge"));
     }
+    function render_xml(){
+        echo "<test></test>";
+    }
 
     function render_html(){
         $this->render();

@@ -12,12 +12,8 @@
   - no support table join
   - ORM
   - migration tool
- - View must support layout.
-  - pure php
+ - View
   - smarty
- - support content_type
-    /test/action.json
-    /test/action.xml
   
  - Write document.
  - Create Demo App (wiki?)
@@ -25,3 +21,11 @@
 
  - stack filter
    like application_before_filter, common_before_filter
+
+
+done
+ - support content_type
+    /test/action.json
+    /test/action.xml
+ - View must support layout.
+  - pure php

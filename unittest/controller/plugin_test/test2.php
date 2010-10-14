@@ -10,7 +10,10 @@ class test2 extends pluginBase{
     function init_param($param){
         $this->param = $param;
     }
-    function before_filter(){
+    function before_filter($param){
+        if(isset($param['test'])){
+            $this->controller->data["test"][] = $param['test'];
+        }
         $this->controller->data["test"][] = "test2 plugin before filter";
     }
 

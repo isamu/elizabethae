@@ -29,11 +29,11 @@ class dispatcher{
     }
 
     function getControllerName($paths){
-        return (((empty($paths[1]) || !preg_match("/^\w+$/",$paths[1]))  ? "default" : $paths[1]) . "Controller");
+        return (((empty($paths[1]) || !preg_match("/^\w+$/",$paths[1]))  ? ( defined("DEFAULT_CONTROLLER") ? DEFAULT_CONTROLLER : "default") : $paths[1]) . "Controller");
     }
 
     function getActionName($paths){
-        return ((empty($paths[2]) || !preg_match("/^(\w+)(\.\w+)$/",$paths[2], $m)) ? "index" : $m[1]) . "Action";
+        return ((empty($paths[2]) || !preg_match("/^(\w+)(\.\w+)?$/",$paths[2], $m)) ? "index" : $m[1]) . "Action";
     }
 }
 ?>

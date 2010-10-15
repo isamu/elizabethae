@@ -1,5 +1,6 @@
 <?PHP
 require_once APP_BASE_DIR . "/controller/ApplicationController.php";
+require_once APP_BASE_DIR . "/ext/php-markdown/markdown.php";
 
 class wikiController extends ApplicationController{
     function __construct($method_name, $param){
@@ -15,7 +16,7 @@ class wikiController extends ApplicationController{
         $this->data['text_html'] = $this->simple_parser($this->data['text']);
     }
     private function simple_parser($text){
-        return preg_replace("/\r|\n/", "<br>\n", $text);
+        return Markdown($text);
     }
 }
 ?>

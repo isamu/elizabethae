@@ -17,7 +17,7 @@ class render_php{
         }
     }
     function render_json(){
-        echo json_encode($this->controller->data['post']);
+        echo json_encode($this->controller->data['text_html']);
     }
     function render_xml(){
         echo "<test></test>";

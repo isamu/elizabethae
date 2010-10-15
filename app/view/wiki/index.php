@@ -2,19 +2,21 @@
 <!--
 $(this).submit(function(event){
                      event.preventDefault();
-                     $.post("/wiki/index.json",
+                     $.post("/wiki/<?= $this->controller->data['page_name']; ?>.json",
                             $("form").serialize(),
                             function(res){
-                                alert(res.text);
+                                $('#wiki_content').html(res);
                             },
                             "json");
                  });
 
 //-->
 </script>
-
-<form action="/wiki/write" >
-<textarea name=text></textarea>
+<div id="wiki_content">
+<?= $this->controller->data['text_html']; ?>
+</div>
+<form action="/wiki/<?= $this->controller->data['page_name']; ?>" >
+<textarea name=text><?= $this->controller->data['text']; ?></textarea>
 <input type=hidden name="pagename" value="testpage">
 <input type="submit">
 

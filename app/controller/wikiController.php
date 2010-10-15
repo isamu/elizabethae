@@ -1,6 +1,6 @@
 <?PHP
 require_once APP_BASE_DIR . "/controller/ApplicationController.php";
-require_once APP_BASE_DIR . "/ext/php-markdown/markdown.php";
+require_once APP_BASE_DIR . "/lib/ext/php-markdown/markdown.php";
 
 class wikiController extends ApplicationController{
     function __construct($method_name, $param){

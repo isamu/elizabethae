@@ -17,12 +17,13 @@
 
 class dispatcher{
     function __construct(){
-        $paths = explode("/", $_SERVER['REQUEST_URI']);
         list($controller, $action, $param) = $this->getControllerAndAction();
         $controller_file = APP_BASE_DIR . "/controller/".$controller.".php";
         if(file_exists($controller_file)){
             require_once $controller_file;
             new $controller($action, $param);
+        }else{
+            echo "not found";
         }
     }
 
@@ -46,6 +47,7 @@ class dispatcher{
                 }
             }
         }
+        $paths = explode("/", $_SERVER['REQUEST_URI']);
         return array($this->getControllerName($paths),
                      $this->getActionName($paths),
                      array());

@@ -7,6 +7,12 @@
  - Modefy dispatche.
  - Imprement Model and View
  - Model
+  - asbtruct mode
+   - adapter
+    - db (mysql)
+    - file
+    - TTT (tokyo tyrant table, cache??)
+    - webservice   
   - support cache ( tokyo tyrant table)
   - support multiple DB connection
   - no support table join
@@ -22,6 +28,8 @@
  - stack filter
    like application_before_filter, common_before_filter
 
+ - internal data structure
+ - security 
 
 done
  - support content_type

@@ -18,13 +18,11 @@
 class dispatcher{
     function __construct(){
         $paths = explode("/", $_SERVER['REQUEST_URI']);
-        $controller = $this->getControllerName($paths);
-        $action = $this->getActionName($paths);
-        
+        list($controller, $action, $param) = $this->getControllerAndAction();
         $controller_file = APP_BASE_DIR . "/controller/".$controller.".php";
         if(file_exists($controller_file)){
             require_once $controller_file;
-            new $controller($action);
+            new $controller($action, $param);
         }
     }
 
@@ -35,5 +33,23 @@ class dispatcher{
     function getActionName($paths){
         return ((empty($paths[2]) || !preg_match("/^(\w+)(\.\w+)?$/",$paths[2], $m)) ? "index" : $m[1]) . "Action";
     }
+
+    function getControllerAndAction(){
+        foreach($GLOBALS['dispatch']['rule'] as $rule){
+            if($rule['regex']){
+                if(preg_match($rule['regex'], $_SERVER['REQUEST_URI'], $m)){
+                    $param = array();
+                    foreach((array) $rule['match'] as $k => $match){
+                        $param[$match] = $m[$k];
+                    }
+                    return array($rule['controller']."Controller", $rule['action']."Action", $param);
+                }
+            }
+        }
+        return array($this->getControllerName($paths),
+                     $this->getActionName($paths),
+                     array());
+    }
+
 }
 ?>

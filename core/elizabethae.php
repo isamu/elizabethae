@@ -12,10 +12,12 @@ class elizabethae{
     public $plugin_dir = "";
     public $plugin_class_names = array();
     public $plugin_classes = array();
+    public $param = null;
 
     //load plugin and execute method
-    function __construct($method_name){
+    function __construct($method_name, $param = null){
         $this->method_name = $method_name;
+        $this->param = $param;
         $files = $this->find_plugin();
         $this->read_plugin($files);
         foreach($this->plugin_class_names as $class){

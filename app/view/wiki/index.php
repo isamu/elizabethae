@@ -2,7 +2,7 @@
 <!--
 $(this).submit(function(event){
                      event.preventDefault();
-                     $.post("/wiki/write.json",
+                     $.post("/wiki/index.json",
                             $("form").serialize(),
                             function(res){
                                 alert(res.text);

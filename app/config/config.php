@@ -5,8 +5,9 @@ define("APP_PLUGIN_DIR", realpath(__DIR__."/../plugin/"));
 
 define("DEFAULT_CONTROLLER", "wiki");
 
-$dispatch['rule'][] = array("regex" => "#^/wiki/(\w)+\/?#",
+$dispatch['rule'][] = array("regex" => "#^/wiki/(\w+)\/?#",
                             "controller" => "wiki",
-                            "page" => array("match" => 1));
+                            "action" => "index",
+                            "match" => array(1 => "page"));
 
 ?>

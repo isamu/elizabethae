@@ -1,15 +1,12 @@
 <?PHP
-class render_php{
-    private $controller;
-    private $controller_name;
-    private $action_name;
+require_once ELIZABETHAE_BASE_DIR."/plugin/render_base.php";
+
+class render_php extends render_base{
     function __construct($controller){
-        $this->controller = $controller;
+        parent::__construct($controller);
     }
     
     function after_filter(){
-        $this->controller_name =  preg_replace("/Controller$/", "", get_class($this->controller));
-        $this->action_name = preg_replace("/Action$/", "", $this->controller->method_name);
         if(method_exists($this, "render_" . $this->controller->content_type)){
             $this->{"render_" . $this->controller->content_type}();
         }else{

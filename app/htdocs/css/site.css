@@ -1,5 +1,10 @@
 body {background-image:url(/img/kingyo01_1.gif)}
 
+textarea{
+width: 80%;
+height: 15em;
+}
+
 #content {
 background-color:#FAEBD7;
 border-radius: 20px;
@@ -9,3 +14,11 @@ width: 60%;
 margin: 0 auto;
 }
 
+#footer {
+background-color:#FAEBD7;
+border-radius: 20px;
+-moz-border-radius: 20px;
+-webkit-border-radius: 20px;
+width: 60%;
+margin: 0 auto;
+}

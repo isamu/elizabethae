@@ -1,0 +1,13 @@
+If you can edit apahe.conf, add below
+
+DocumentRoot "{YOUR elizabethae DIR}/app/htdocs"
+
+<Directory "{YOUR elizabethae DIR}/app/htdocs">
+RewriteEngine on
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !favicon.ico$
+        RewriteRule ^(.*)$ index.php [QSA,L]
+</Directory>
+
+

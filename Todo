@@ -5,7 +5,7 @@
   -  behavior when loop.
  - Write unit test code.
  - Modefy dispatche.
- - Imprement Model and View
+ - Impliment Model and View
  - Model
   - asbtruct mode
    - adapter
@@ -18,17 +18,12 @@
   - no support table join
   - ORM
   - migration tool
- - View
-  - smarty
   
  - Write document.
  - Create Demo App (wiki?)
    - rich wiki??
 
- - stack filter
-   like application_before_filter, common_before_filter
-
- - internal data structure
+ - to define internal data structure
  - security 
 
 done
@@ -37,3 +32,4 @@ done
     /test/action.xml
  - View must support layout.
   - pure php
+  - smarty

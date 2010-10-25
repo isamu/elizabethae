@@ -8,7 +8,7 @@ Elizabethae Sample Site
 </head>
 <body>
 <div id="content">
-<h2>elizabethae wiki <?= ?></h2>
+<h2>elizabethae wiki </h2>
 <? $this->render_body() ?>
 </div>
 <b>this is template</b>

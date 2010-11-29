@@ -14,6 +14,7 @@
   //todo default controller, default action
   //     routing by regular expression
   //     default error page
+namespace elizabethae\util;
 
 class dispatcher{
     function __construct(){

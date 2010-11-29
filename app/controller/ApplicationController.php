@@ -1,7 +1,7 @@
 <?PHP
 require_once ELIZABETHAE_BASE_DIR."/core/elizabethae.php";
 
-class ApplicationController extends elizabethae{
+class ApplicationController extends \elizabethae\core\elizabethae{
     public $before_filter = array();
     public $after_filter = array();
 

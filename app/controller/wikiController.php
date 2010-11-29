@@ -1,8 +1,10 @@
 <?PHP
+namespace elizabethae\controller;
+
 require_once APP_BASE_DIR . "/controller/ApplicationController.php";
 require_once APP_BASE_DIR . "/lib/ext/php-markdown/markdown.php";
 
-class wikiController extends ApplicationController{
+class wikiController extends \elizabethae\controller\ApplicationController{
     function __construct($method_name, $param){
         parent::__construct($method_name, $param);
     }

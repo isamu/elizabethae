@@ -22,7 +22,8 @@ class dispatcher{
         $controller_file = APP_BASE_DIR . "/controller/".$controller.".php";
         if(file_exists($controller_file)){
             require_once $controller_file;
-            new $controller($action, $param);
+            $controller_name = '\elizabethae\controller\\'.$controller;
+            new $controller_name($action, $param);
         }else{
             echo "not found";
         }

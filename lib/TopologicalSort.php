@@ -1,4 +1,6 @@
 <?PHP
+namespace elizabethae\util;
+
 class TopologicalSort{
     var $nodes = array();
 

@@ -5,6 +5,8 @@
    *  mix-in function like ruby
    *  simple filter chain
    */
+namespace elizabethae\core;
+
 require_once ELIZABETHAE_BASE_DIR."/lib/TopologicalSort.php";
 
 class elizabethae{
@@ -116,7 +118,7 @@ class elizabethae{
     
     function sort_filter($name){
         if(isset($this->filters[$name])){
-            $this->ts = new TopologicalSort;
+            $this->ts = new \elizabethae\util\TopologicalSort;
             $this->ts->setNode($this->filters[$name]);
             return $res = $this->ts->sort();
         }

@@ -17,7 +17,7 @@ class elizabethae{
     public $param = null;
 
     //load plugin and execute method
-    function __construct($method_name, $param = null){
+    public function __construct($method_name, $param = null){
         $this->method_name = $method_name;
         $this->param = $param;
         $files = $this->find_plugin();
@@ -33,7 +33,7 @@ class elizabethae{
     }
 
     //find plugin files from plugin_dir, and return files
-    function find_plugin(){
+    private function find_plugin(){
         $files = array();
         foreach(glob($this->plugin_dir."/*.php") as $file){
             $files[] = $file;
@@ -42,7 +42,7 @@ class elizabethae{
     }
     
     //read plugin files
-    function read_plugin($files){
+    private function read_plugin($files){
         foreach((array) $files as $file){
             require_once $file;
             $this->plugin_class_names[] = preg_replace("/\.php$/","", basename($file));
@@ -51,7 +51,7 @@ class elizabethae{
 
     // load plugin(mix-in) class , set_initialize parametor, and/or set data
     // find plugin filter and set filter
-    function initialize_plugin($class_name, $method_name){
+    private function initialize_plugin($class_name, $method_name){
         $class = new $class_name($this);
         if(method_exists($class, "init_param")){
             $class->init_param($this->get_plugin_initialize_param_from_controller($class_name, $method_name));
@@ -71,24 +71,24 @@ class elizabethae{
     }
 
     //get plugin initialize parametor from controller
-    function get_plugin_initialize_param_from_controller($plugin_name, $method_name){
+    private function get_plugin_initialize_param_from_controller($plugin_name, $method_name){
         return array_merge((array) $this->{$plugin_name},
                            (array) $this->{$plugin_name."_with_default"}, 
                            (array) $this->{$plugin_name."_only_".$method_name},
                            (array) $this->{$plugin_name."_with_default_only_".$method_name});
     }
-    function call_method($callMethodName, $method_name){
+    private function call_method($callMethodName, $method_name){
         $args = $this->get_method_param_from_controller($callMethodName, $method_name);
         $this->{$callMethodName}($args);
     }
 
-    function get_method_param_from_controller($method_name, $from_method_name){
+    private function get_method_param_from_controller($method_name, $from_method_name){
         return array_merge((array) $this->{$method_name},
                            (array) $this->{$method_name."_with_default"},
                            (array) $this->{$method_name."_from_".$from_method_name."_with_default"});
     }
     
-    function set_filter($name, $method_name){
+    private function set_filter($name, $method_name){
         foreach((array) $this->{$name} as $filter_name => $filter){
             if(is_array($filter)){
                 if($this->is_set_filter($filter, $method_name)){
@@ -102,7 +102,7 @@ class elizabethae{
         }
     }
 
-    function is_set_filter($filter, $method_name){
+    private function is_set_filter($filter, $method_name){
         if(is_array($filter['only'])){
             if(!in_array($method_name, $filter['only'])){
                 return false;
@@ -116,7 +116,7 @@ class elizabethae{
         return true;
     }
     
-    function sort_filter($name){
+    private function sort_filter($name){
         if(isset($this->filters[$name])){
             $this->ts = new \elizabethae\util\TopologicalSort;
             $this->ts->setNode($this->filters[$name]);
@@ -125,7 +125,7 @@ class elizabethae{
         return array();
     }
 
-    function apply_filter($name, $sorted_filter, $method_name){
+    private function apply_filter($name, $sorted_filter, $method_name){
         foreach((array) $sorted_filter as $filter){
             if($this->filters[$name][$filter]['type'] == "class"){
                 $args = $this->get_method_param_from_controller($filter, $method_name);

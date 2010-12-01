@@ -37,6 +37,17 @@ class dbconnector extends Singleton{
         $dbh = new \PDO($dsn, $user, $password);
         return $dbh;
     }
+
+    /*
+     * find data source
+     * model + algorithm
+     * model + real
+     *         write
+     * read
+     * write
+     *
+     * default
+     */
     function find_config($method, $model_name){
         if (isset($this->config['function'])){
             if (is_object($this->config['function'])){

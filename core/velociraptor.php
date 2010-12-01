@@ -17,6 +17,7 @@ class velociraptor {
         }
     }
 
+    //todo use bindparam
     function find($column, $cond){
         $conn = $this->find_connection("read", array());
         $stmt = $conn->query("SELECT * FROM ".$this->get_model_name() . " where " . $column . "= '" . $cond . "'");
@@ -28,22 +29,31 @@ class velociraptor {
         return false;
     }
 
+    //todo use bindparam
+    function create($array){
+        $conn = $this->find_connection("write", array());
+        $columns = array();
+        $values = array();
+        foreach($array as $k => $v){
+            $columns[] = $k;
+            $values[] = "'" . $v . "'";
+        }
+        $sth = $conn->prepare( "insert into " .$this->get_model_name() . " (" . join($columns, ",") . ")  values (" . join($values, "'") . ")" );
+        if($sth->execute()){
+            $array['id'] = $conn->lastInsertId();
+            $this->set_property($array);
+            return true;
+        }
+        return false;
+    }
+
+
     function set_property($row){
         foreach ($row as $k => $v){
             $this->{$k} = $v;
         }
     }
 
-    /*
-     * find data source
-     * model + algorithm
-     * model + real
-     *         write
-     * read
-     * write
-     *
-     * default
-     */
     function find_connection($method, $condition){
         $dbconn = dbconnector::getInstance();
         return $dbconn->get_connection($method, $this->get_model_name());

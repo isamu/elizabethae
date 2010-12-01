@@ -16,8 +16,22 @@ class velociraptor {
             $this->find($match[1], $args[0]);
         }
     }
+
     function find($column, $cond){
-        $this->find_connection("read", get_class($this), array());
+        $conn = $this->find_connection("read", array());
+        $stmt = $conn->query("SELECT * FROM ".$this->get_model_name() . " where " . $column . "= '" . $cond . "'");
+        
+        if($row = $stmt->fetch(\PDO::FETCH_ASSOC)){
+            $this->set_property($row);
+            return true;
+        }
+        return false;
+    }
+
+    function set_property($row){
+        foreach ($row as $k => $v){
+            $this->{$k} = $v;
+        }
     }
 
     /*
@@ -30,40 +44,13 @@ class velociraptor {
      *
      * default
      */
-    function find_connection($method, $model_name, $condition){
+    function find_connection($method, $condition){
         $dbconn = dbconnector::getInstance();
-        $velociraptor_dbconn = $dbconn->getDBConfig();
-        $_model_name = array_pop(split("\\\\", $model_name));
-
-        if (isset($velociraptor_dbconn['function'])){
-            if (is_object($velociraptor_dbconn['function'])){
-                /* in case closer */
-                $velociraptor_dbconn['function']();
-            } elseif(is_string($velociraptor_dbconn['function'])){
-                $this->{$velociraptor_dbconn['function']}();
-            }
-        }
-        if (isset($velociraptor_dbconn[$_model_name . '_function'])){
-            if (is_object($velociraptor_dbconn[$_model_name . '_function'])){
-                /* in case closer */
-                $velociraptor_dbconn[$_model_name . '_function']();
-            } elseif(is_string($velociraptor_dbconn[$_model_name . '_function'])){
-                $this->{$velociraptor_dbconn[$_model_name . '_function']}();
-            }
-        }
-        if (isset($velociraptor_dbconn[$_model_name . '_' . $method])){
-            
-        }
-        if (isset($velociraptor_dbconn[$_model_name])){
-            
-        }
-        if (isset($velociraptor_dbconn[$method])){
-            
-        }
-        if (isset($velociraptor_dbconn['default'])){
-            
-        }
+        return $dbconn->get_connection($method, $this->get_model_name());
     }
     
+    function get_model_name(){
+        return array_pop(split("\\\\", get_class($this)));
+    }
 }
 ?>

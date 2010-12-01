@@ -44,29 +44,18 @@ class dbconnector extends Singleton{
 
     /*
      * find data source
-     * model + algorithm
-     * model + real
-     *         write
-     * read
-     * write
-     *
-     * default
      */
     function find_config($method, $model_name){
         if (isset($this->config['function'])){
             if (is_object($this->config['function'])){
                 /* in case closer */
-                $this->config['function']();
-            } elseif(is_string($this->config['function'])){
-                $this->{$this->config['function']}();
+                return $this->config['function']($method, $model_name);
             }
         }
         if (isset($this->config[$model_name . '_function'])){
             if (is_object($this->config[$model_name . '_function'])){
                 /* in case closer */
-                $this->config[$model_name . '_function']();
-            } elseif(is_string($this->config[$model_name . '_function'])){
-                $this->{$this->config[$model_name . '_function']}();
+                return $this->config[$model_name . '_function']($method, $model_name);
             }
         }
         if (isset($this->config[$model_name . '_' . $method])){

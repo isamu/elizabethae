@@ -5,7 +5,7 @@ use velociraptor\util\dbconnector;
 
 class VelociraptorDbconnectorTest extends PHPUnit_Framework_TestCase
 {
-    /* model is user, book, shelf, shop */
+    /* model is user, book, shelf, shop,  */
     private $dbconn;
     private $configs;
 
@@ -32,7 +32,15 @@ class VelociraptorDbconnectorTest extends PHPUnit_Framework_TestCase
                                                     "dbname" => "shop_read",
                                                     "host" => "192.168.1.1",
                                                     "user" => "test",
-                                                    "password" => "pass"));
+                                                    "password" => "pass"),
+                               "shelf_function" => function($method, $model){
+                                   return array("db" => "mysql",
+                                                "dbname" => $model,
+                                                "host" => $method,
+                                                "user" => "test",
+                                                "password" => "pass"
+                                                );
+                               });
         $this->dbconn->setDBCofig($this->configs);
     }
 
@@ -58,5 +66,38 @@ class VelociraptorDbconnectorTest extends PHPUnit_Framework_TestCase
                             $this->configs["default"]);
     }
 
+    function test_get_model_function_connection(){
+        $this->assertEquals($this->dbconn->get_connection("read", "shelf"),
+                            array("db" => "mysql",
+                                  "dbname" => "shelf",
+                                  "host" => "read",
+                                  "user" => "test",
+                                  "password" => "pass"
+                                  ));
+    }
+    
+    function test_get_function_connection(){
+        $this->configs = array("default" => array("db" => "mysql",
+                                                  "dbname" => "defalut",
+                                                  "host" => "192.168.1.1",
+                                                  "user" => "test",
+                                                  "password" => "pass"),
 
+                               "function" => function($method, $model){
+                                   return array("db" => "mysql",
+                                                "dbname" => $model,
+                                                "host" => $method,
+                                                "user" => "test",
+                                                "password" => "pass"
+                                                );
+                               });
+        $this->dbconn->setDBCofig($this->configs);
+        $this->assertEquals($this->dbconn->get_connection("read", "shelf"),
+                            array("db" => "mysql",
+                                  "dbname" => "shelf",
+                                  "host" => "read",
+                                  "user" => "test",
+                                  "password" => "pass"
+                                  ));
+    }
 }

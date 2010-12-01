@@ -11,7 +11,7 @@ require_once("velociraptor_singleton.php");
 class dbconnector extends Singleton{
     private $config;
     private $connections = array();
-
+    private $enable_test = false;
     function setDBCofig($config){
         $this->config = $config;
     }
@@ -34,8 +34,12 @@ class dbconnector extends Singleton{
             $user = $config['user'];
             $password = $config['password'];
         }        
-        $dbh = new \PDO($dsn, $user, $password);
-        return $dbh;
+        if($this->enable_test){
+            return $config;
+        }else{
+            $dbh = new \PDO($dsn, $user, $password);
+            return $dbh;
+        }
     }
 
     /*
@@ -66,10 +70,10 @@ class dbconnector extends Singleton{
             }
         }
         if (isset($this->config[$model_name . '_' . $method])){
-            
+            return $this->_find_config($this->config[$model_name . '_' . $method]);
         }
         if (isset($this->config[$model_name])){
-            
+            return $this->_find_config($this->config[$model_name]);
         }
         if (isset($this->config[$method])){
             return $this->_find_config($this->config[$method]);
@@ -85,5 +89,9 @@ class dbconnector extends Singleton{
         }else{
             return $configs[mt_rand(0, count($configs) - 1)];
         }
+    }
+
+    function enableTest(){
+        $this->enable_test = true;
     }
 }

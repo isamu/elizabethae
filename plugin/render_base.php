@@ -30,7 +30,7 @@ class render_base{
     }
 
     protected function getControllerName(){
-        return preg_replace("/Controller$/", "", get_class($this->controller));
+        return preg_replace("/Controller$/", "", array_pop(split("\\\\", get_class($this->controller))));
     }
     protected function getActionName(){
         return  preg_replace("/Action$/", "", $this->controller->method_name);

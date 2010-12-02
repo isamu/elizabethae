@@ -49,7 +49,8 @@ class dispatcher{
                 }
             }
         }
-        $paths = explode("/", $_SERVER['REQUEST_URI']);
+        $path = str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+        $paths = explode("/", $path);
         return array($this->getControllerName($paths),
                      $this->getActionName($paths),
                      array());

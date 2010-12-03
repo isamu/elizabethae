@@ -13,7 +13,7 @@ require_once("velociraptor_dbconnector.php");
 class velociraptor {
     function __call($function, $args) {
         if(preg_match("/^find_by_([\w\d]+)$/", $function, $match)){
-            $this->find($match[1], $args[0]);
+            return $this->find($match[1], $args[0]);
         }
     }
 
@@ -36,9 +36,9 @@ class velociraptor {
         $values = array();
         foreach($array as $k => $v){
             $columns[] = $k;
-            $values[] = "'" . $v . "'";
+            $values[] = $conn->quote($v);
         }
-        $sth = $conn->prepare( "insert into " .$this->get_model_name() . " (" . join($columns, ",") . ")  values (" . join($values, "'") . ")" );
+        $sth = $conn->prepare("insert into " .$this->get_model_name() . " (" . join($columns, ",") . ")  values (" . join($values, ", ") . ")" );
         if($sth->execute()){
             $array['id'] = $conn->lastInsertId();
             $this->set_property($array);
@@ -60,7 +60,7 @@ class velociraptor {
     }
     
     function get_model_name(){
-        return array_pop(split("\\\\", get_class($this)));
+        return strtolower(array_pop(split("\\\\", get_class($this))));
     }
 }
 ?>

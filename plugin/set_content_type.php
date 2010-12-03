@@ -14,3 +14,5 @@ class set_content_type{
 
     }
 }
+
+?>

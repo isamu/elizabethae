@@ -16,3 +16,5 @@ class render_smarty extends render_base{
         $this->smarty->display($this->controller_name.'-'.$this->action_name.'.tpl');
     }
 }
+
+?>

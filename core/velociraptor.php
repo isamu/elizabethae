@@ -7,9 +7,6 @@
 namespace velociraptor\core;
 use \velociraptor\util\dbconnector;
 
-require_once("velociraptor_dbconnector.php");
-
-
 class velociraptor {
     function __call($function, $args) {
         if(preg_match("/^find_by_([\w\d]+)$/", $function, $match)){

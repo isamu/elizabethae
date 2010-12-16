@@ -9,8 +9,6 @@ namespace elizabethae\core;
 
 use \elizabethae\util\TopologicalSort;
 
-require_once ELIZABETHAE_BASE_DIR."/lib/TopologicalSort.php";
-
 class elizabethae{
     public $filters = array();
     public $plugin_dir = "";

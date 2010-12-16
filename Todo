@@ -15,6 +15,7 @@
     - webservice   
   - support cache ( tokyo tyrant table)
   - support multiple DB connection
+  - support nosql
   - no support table join
   - ORM
   - migration tool
@@ -25,6 +26,8 @@
 
  - to define internal data structure
  - security 
+
+ - auto load
 
 done
  - support content_type

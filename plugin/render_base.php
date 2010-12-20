@@ -1,4 +1,6 @@
 <?PHP
+namespace elizabethae\plugin;
+
 class render_base{
     protected $controller;
     protected $controller_name;

@@ -1,4 +1,6 @@
 <?PHP
+namespace elizabethae\plugin;
+
 require_once ELIZABETHAE_BASE_DIR."/plugin/render_base.php";
 require_once APP_BASE_DIR . "/lib/ext/smarty/libs/Smarty.class.php";
 

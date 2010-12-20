@@ -1,4 +1,6 @@
 <?PHP
+namespace elizabethae\plugin;
+
 class content_type_header{
     public $before_filter = array("require" => array("set_content_type"));
     private $headers = array("json" => 'Content-Type: text/javascript; charset=utf8',

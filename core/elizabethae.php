@@ -20,8 +20,7 @@ class elizabethae{
     public function __construct($method_name, $param = null){
         $this->method_name = $method_name;
         $this->param = $param;
-        $files = $this->find_plugin();
-        $this->read_plugin($files);
+        $this->find_plugin();
         foreach($this->plugin_class_names as $class){
             $this->initialize_plugin($class, $method_name);
         }
@@ -34,24 +33,16 @@ class elizabethae{
 
     //find plugin files from plugin_dir, and return files
     private function find_plugin(){
-        $files = array();
         foreach(glob($this->plugin_dir."/*.php") as $file){
-            $files[] = $file;
-        }
-        return $files;
-    }
-    
-    //read plugin files
-    private function read_plugin($files){
-        foreach((array) $files as $file){
-            require_once $file;
             $this->plugin_class_names[] = preg_replace("/\.php$/","", basename($file));
         }
     }
-
+    
     // load plugin(mix-in) class , set_initialize parametor, and/or set data
     // find plugin filter and set filter
     private function initialize_plugin($class_name, $method_name){
+        $class_name = "\\elizabethae\\plugin\\". $class_name;
+
         $class = new $class_name($this);
         if(method_exists($class, "init_param")){
             $class->init_param($this->get_plugin_initialize_param_from_controller($class_name, $method_name));
@@ -143,6 +134,8 @@ class elizabethae{
             }
         }
     }
+    function __get($name){}
+    
 }
 
 ?>

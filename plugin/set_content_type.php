@@ -1,4 +1,6 @@
 <?PHP
+namespace elizabethae\plugin;
+
 class set_content_type{
     public $controller;
     function __construct($controller){

@@ -1,4 +1,6 @@
 <?PHP
+namespace elizabethae\plugin;
+
 require_once ELIZABETHAE_BASE_DIR."/plugin/render_base.php";
 
 class render_php extends render_base{

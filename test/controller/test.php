@@ -1,49 +1,26 @@
 <?PHP
-use elizabethae\core\Elizabethae;
-
 define("ELIZABETHAE_BASE_DIR", realpath(__DIR__."/../../"));
 define("APP_BASE_DIR", realpath(__DIR__."/../"));
 
-require_once("../../core/elizabethae.php");
+use elizabethae\controller\testController;
 
-class testController extends Elizabethae{
-    var $before_filter = array("only_aaa" =>
-                               array("only" => array("aa", "cc", "TEST"),
-                                     "expect" => array("aa", "cc"),
-                                     "require" => array("cont_aa", "cont_cc"),
-                                     "required" => array("cont_zz")),
-                               "cont_aa",
-                               "cont_cc",
-                               "cont_zz");
-    
+require_once ELIZABETHAE_BASE_DIR . "/lib/bootstrap.php";
+require_once "testController.php";
+
+class ElizabethaeTest extends PHPUnit_Framework_TestCase
+{
+    protected function setUp()
+    {
+    }
+
+    function test_get_default_connection(){
+        $testController = new testController("TEST");
+        var_dump($testController->getParam());
+        
+        $this->assertEquals("a", "a");
+    }
+}
 
 
-    function __construct($methodName){
-        $this->plugin_dir = realpath(__DIR__."/../plugin/");
-        parent::__construct($methodName);
-    }            
-    
-    var $test_with_default = array("A");
-    var $test_only_TEST = array("B");
-    var $test_with_default_only_TEST = array("C");
 
-    function TEST(){
-        $this->test2Method();
-        echo "doneTEST";
-    }
-    function only_aaa(){
-        echo "func only_aaa\n";
-    }
-    function cont_aa(){
-        echo "func cont_aa\n";
-    }
-    function cont_cc(){
-        echo "func cont_cc\n";
-    }
-    function cont_zz(){
-        echo "func cont_zz\n";
-    }
-}    
-
-new testController("TEST");
 ?>

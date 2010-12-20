@@ -40,10 +40,12 @@ class TopologicalSort{
         if(!isset($classes[$require])){
             return false;
         }
-        if(!is_array($classes[$require]["required"])){
+        if(isset($classes[$require]["required"]) &&
+           !is_array($classes[$require]["required"])){
             $classes[$require]["required"] = array();
         }
-        if(!in_array($require, $classes[$require]["required"])){
+        if(isset($classes[$require]["required"]) &&
+           !in_array($require, $classes[$require]["required"])){
             $classes[$require]["required"][] = $class_name;
         }
     }

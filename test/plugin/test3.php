@@ -6,11 +6,8 @@ class test3 extends pluginBase{
     public $required = array();
     public $require = array();
 
-    function init_param($param){
-        $this->param = $param;
-    }
     function before_filter(){
-        echo "test3\n";
+        $this->data["test"]["plugin_test3_before_filter"] = true;
     }
 }
 ?>

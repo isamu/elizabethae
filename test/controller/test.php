@@ -13,11 +13,27 @@ class ElizabethaeTest extends PHPUnit_Framework_TestCase
     {
     }
 
-    function test_get_default_connection(){
-        $testController = new testController("TEST");
-        var_dump($testController->getParam());
-        
-        $this->assertEquals("a", "a");
+    function test_filter_param(){
+        $testController = new testController("testAction");
+        $this->assertEquals($testController->getData(),
+                            array("test" => array("plugin_test_before_filter" => true,
+                                                  "plugin_test2_before_filter" => true,
+                                                  "plugin_test3_before_filter" => true,
+                                                  "expect_test" => true,
+                                                  "plugin_test2_method" => true,
+                                                  "test_method" => true,
+                                                  "test_param" => array("A", "B"))));
+    }
+
+    function test_filter_param2(){
+        $testController = new testController("ccAction");
+        $this->assertEquals($testController->getData(), 
+                            array("test" => array("plugin_test_before_filter" => true,
+                                                  "plugin_test2_before_filter" => true,
+                                                  "plugin_test3_before_filter" => true,
+                                                  "test_param" => array("A", "C"))));
+
+
     }
 }
 

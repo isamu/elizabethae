@@ -15,6 +15,7 @@ class elizabethae{
     public $plugin_class_names = array();
     public $plugin_classes = array();
     public $param = null;
+    public $data = null;
 
     //load plugin and execute method
     public function __construct($method_name, $param = null){
@@ -41,9 +42,9 @@ class elizabethae{
     // load plugin(mix-in) class , set_initialize parametor, and/or set data
     // find plugin filter and set filter
     private function initialize_plugin($class_name, $method_name){
-        $class_name = "\\elizabethae\\plugin\\". $class_name;
+        $class_full_name = "\\elizabethae\\plugin\\". $class_name;
 
-        $class = new $class_name($this);
+        $class = new $class_full_name($this);
         if(method_exists($class, "init_param")){
             $class->init_param($this->get_plugin_initialize_param_from_controller($class_name, $method_name));
         }
@@ -52,13 +53,13 @@ class elizabethae{
         }
         foreach(array("before_filter", "after_filter") as $filter){
             if(method_exists($class, $filter)){
-                $this->filters[$filter][$class_name] = array("type" =>"class",
+                $this->filters[$filter][$class_full_name] = array("type" =>"class",
                                                              "require" => $class->{$filter}["require"],
                                                              "required" => $class->{$filter}["required"]);
             }
 
         }
-        $this->plugin_classes[$class_name] = $class;
+        $this->plugin_classes[$class_full_name] = $class;
     }
 
     //get plugin initialize parametor from controller
@@ -84,8 +85,8 @@ class elizabethae{
             if(is_array($filter)){
                 if($this->is_set_filter($filter, $method_name)){
                     $this->filters[$name][$filter_name] = array("type" => "method",
-                                                                "require" => $filter['require'],
-                                                                "required" => $filter['required']);
+                                                                "require" => isset($filter['require']) ? $filter['require'] : null,
+                                                                "required" => isset($filter['required']) ? $filter['required'] : null);
                 }
             }else{
                 $this->filters[$name][$filter] = array("type" => "method");
@@ -94,12 +95,12 @@ class elizabethae{
     }
 
     private function is_set_filter($filter, $method_name){
-        if(is_array($filter['only'])){
+        if(isset($filter['only']) && is_array($filter['only'])){
             if(!in_array($method_name, $filter['only'])){
                 return false;
             }
         }
-        if(is_array($filter['expect'])){
+        if(isset($filter['expect']) && is_array($filter['expect'])){
             if(in_array($method_name, $filter['expect'])){
                 return false;
             }

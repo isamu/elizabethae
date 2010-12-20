@@ -7,14 +7,12 @@ class test2 extends pluginBase{
                                   "required" => null,
                                   "require" => array("test"));
 
-    function init_param($param){
-        $this->param = $param;
-    }
     function before_filter(){
-        echo "test2!!!\n";
+        $this->data["test"]["plugin_test2_before_filter"] = true;
     }
 
     function test2Method(){
+        $this->data["test"]["plugin_test2_method"] = true;
     }
 }
 ?>

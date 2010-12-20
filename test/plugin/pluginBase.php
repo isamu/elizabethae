@@ -7,9 +7,13 @@ class pluginBase{
     public $before_filter = array("require" => null, "required" => null,);
     public $after_filter = array("require" => null, "required" => null,);
 
-    function __construct(){
+    function init_param(&$param){
+        $this->param = &$param;
     }
-    function init_param($param){
+    function init_data(&$data){
+        $this->data = &$data;
+    }
+    function __construct(){
     }
     function before_filter(){
     }

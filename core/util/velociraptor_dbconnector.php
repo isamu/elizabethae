@@ -6,7 +6,7 @@
  */
 namespace velociraptor\util;
 
-require_once("velociraptor_singleton.php");
+require_once(realpath(__DIR__."/../") . "/velociraptor_singleton.php");
 
 class dbconnector extends Singleton{
     private $config;

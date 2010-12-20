@@ -1,5 +1,5 @@
 <?PHP
-require_once(realpath(__DIR__."/../../") . "/core/velociraptor_dbconnector.php");
+require_once(realpath(__DIR__."/../../") . "/core/util/velociraptor_dbconnector.php");
 
 use velociraptor\util\dbconnector;
 

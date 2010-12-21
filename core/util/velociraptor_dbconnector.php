@@ -33,12 +33,9 @@ class dbconnector extends Singleton{
             return $config;
         }
         if ($config['db'] == 'mysql'){
-            $dsn = 'mysql:dbname='.$config['dbname'].';host='.$config['host'];
-            $user = $config['user'];
-            $password = $config['password'];
-            
-            $dbh = new \PDO($dsn, $user, $password);
-            return $dbh;
+            $con = new \velociraptor\util\mysql($config);
+            return $con;
+           
 
         } elseif ($config['db'] == 'tokyotyrant'){
             $con = new \velociraptor\util\tokyotyrant($config);

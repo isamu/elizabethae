@@ -1,0 +1,4 @@
+requirement
+  php5.3
+  pecl TokyoTyrantTable
+  openpear Services/Foursquare.php

@@ -6,7 +6,7 @@
  */
 namespace velociraptor\util;
 
-class Singleton{
+class singleton{
     private static $singleton;
 
     private function __construct() {

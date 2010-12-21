@@ -47,4 +47,4 @@ class velociraptor {
         return strtolower(array_pop(split("\\\\", get_class($this))));
     }
 }
-?>
+

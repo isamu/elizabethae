@@ -22,23 +22,27 @@ class dbconnector extends Singleton{
     function get_connection($method, $model_name){
         $config =  $this->find_config($method, $model_name);
         $key = hash("md5", json_encode($config));
-        if(isset($this->connections[$key])){
+        if (isset($this->connections[$key])){
             return $this->connections[$key];
         }
         $this->connections[$key] = $this->_get_connection($config);
         return $this->connections[$key];
     }
     function _get_connection($config){
-        if($config['db'] == 'mysql'){
+        if($this->enable_test){
+            return $config;
+        }
+        if ($config['db'] == 'mysql'){
             $dsn = 'mysql:dbname='.$config['dbname'].';host='.$config['host'];
             $user = $config['user'];
             $password = $config['password'];
-        }        
-        if($this->enable_test){
-            return $config;
-        }else{
+            
             $dbh = new \PDO($dsn, $user, $password);
             return $dbh;
+
+        } elseif ($config['db'] == 'tokyotyrant'){
+            $con = new \velociraptor\util\tokyotyrant($config);
+            return $con;
         }
     }
 

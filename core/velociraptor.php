@@ -8,10 +8,19 @@ namespace velociraptor\core;
 use \velociraptor\util\dbconnector;
 
 class velociraptor {
+    private $write_method = array("put", "create", "update");
+
     function __call($function, $args) {
         if(preg_match("/^find_by_([\w\d]+)$/", $function, $match)){
             return $this->find($match[1], $args[0]);
+        }else{
+            $conn = $this->find_connection($this->read_or_write($function));
+            return call_user_func_array(array($conn, $function), $args);
         }
+    }
+
+    private function read_or_write($name){
+        return (in_array("name", $this->write_method)) ? "write" : "read";
     }
 
     //todo use bindparam
@@ -26,6 +35,7 @@ class velociraptor {
         return false;
     }
 
+   
     //todo use bindparam
     function create($array){
         $conn = $this->find_connection("write", array());
@@ -44,10 +54,9 @@ class velociraptor {
         return false;
     }
 
-
     function set_property($row){
         foreach ($row as $k => $v){
-            $this->{$k} = $v;
+            $this->{strtolower($k)} = $v;
         }
     }
 

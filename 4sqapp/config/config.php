@@ -19,7 +19,7 @@ $db_config = array("default" => array("db" => "mysql",
                                       "user" => "root",
                                       "password" => ""),
                    "oauthsession" => array("db" => "tokyotyrant",
-                                           "host" => "localhost"
+                                           "host" => "localhost",
                                            "port" => "1979"));
 
 ?>

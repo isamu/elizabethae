@@ -23,6 +23,11 @@ class velociraptor {
     private function read_or_write($name){
         return (in_array("name", $this->write_method)) ? "write" : "read";
     }
+    
+    function find($key){
+        $conn = $this->find_connection("read", array());
+        return $conn->find($this->get_model_name(), $key);
+    }
 
     //todo use bindparam
     function create($array){

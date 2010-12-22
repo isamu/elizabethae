@@ -17,27 +17,27 @@ class userController extends \elizabethae\controller\ApplicationController{
             $request_token_info = $oauth->getRequestToken("http://foursquare.com/oauth/request_token");
             $session_key = $this->generateRandomString();
             setcookie("user_sess",  $session_key, time() + 180 * 86400, '/');
-            $o_sess->put($session_key, $request_token_info);
+            $o_sess->create(array("id" => $session_key) + $request_token_info);
             header("Location: " . "http://foursquare.com/oauth/authorize?oauth_token=". $request_token_info["oauth_token"]);
         }else{
             $session_key = $_COOKIE["user_sess"];
-            $request_token_info = $o_sess->get($session_key);
+            $request_token_info = $o_sess->find($session_key);
             $oauth->setToken($request_token_info["oauth_token"],$request_token_info["oauth_token_secret"]);
             $access_token_info = $oauth->getAccessToken("http://foursquare.com/oauth/access_token");
-            $o_sess->put($session_key, $access_token_info);
-
+            $o_sess->create(array("id" => $session_key) + $access_token_info);
+            
             $oauth->setToken($access_token_info["oauth_token"],$access_token_info["oauth_token_secret"]);
             $forsq = new \Services_Foursquare($oauth);
-            $res = $forsq->user();
-            $xml = simplexml_load_string($res);
+            $xml = simplexml_load_string($forsq->user());
             $user = new User();
             if($user->find_by_4sqid((string) $xml->id)){
-                $o_sess->put($session_key, array("id" => strtolower($user->id)));
+                $o_sess->create(array("id" => $session_key,
+                                      "user_id" => strtolower($user->id)));
             }else{
                 $user->create(array("4sqid" => $xml->id,
                                     "data" => json_encode($xml)));
-                $o_sess->put($session_key, array("id" => $user->id));
-
+                $o_sess->create(array("id" => $session_key,
+                                      "user_id" => $user->id));
             }
             header("Location: http://4sq.to-kyo.to/user/mypage");
         }
@@ -46,9 +46,9 @@ class userController extends \elizabethae\controller\ApplicationController{
     function mypageAction(){
         $o_sess = new OauthSession();
         $session_key = $_COOKIE["user_sess"];
-        $key = $o_sess->get($session_key);
+        $key = $o_sess->find($session_key);
         $user = new User();
-        if(isset($key['id']) && $user->find_by_id((string) $key['id'])){
+        if(isset($key['user_id']) && $user->find_by_id((string) $key['user_id'])){
             $user_data = json_decode($user->data, true);
             $this->data['user'] = $user_data;
         }

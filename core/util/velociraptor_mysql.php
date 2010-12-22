@@ -4,6 +4,7 @@ namespace velociraptor\util;
 
 class mysql{
     private $dbh;
+    private $row;
 
     function __construct($config){
         $dsn = 'mysql:dbname='.$config['dbname'].';host='.$config['host'];

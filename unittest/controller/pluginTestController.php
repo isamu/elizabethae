@@ -10,10 +10,6 @@ class pluginTestController extends ApplicationController{
         parent::__construct($method_name);
     }
 
-    function get_testData(){
-        return $this->data['test'];
-    }
-
 }
 ?>
 

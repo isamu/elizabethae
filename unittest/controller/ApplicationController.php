@@ -17,5 +17,10 @@ class ApplicationController extends \elizabethae\core\elizabethae{
             require_once($view_file);
         }
     }
+
+    function get_testData(){
+        return $this->data['test'];
+    }
+
 }
 ?>

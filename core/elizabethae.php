@@ -72,16 +72,6 @@ class elizabethae{
                            (array) $this->{$plugin_name."_only_".$method_name},
                            (array) $this->{$plugin_name."_with_default_only_".$method_name});
     }
-    private function call_method($callMethodName, $method_name){
-        $args = $this->get_method_param_from_controller($callMethodName, $method_name);
-        $this->{$callMethodName}($args);
-    }
-
-    private function get_method_param_from_controller($method_name, $from_method_name){
-        return array_merge((array) $this->{$method_name},
-                           (array) $this->{$method_name."_with_default"},
-                           (array) $this->{$method_name."_from_".$from_method_name."_with_default"});
-    }
 
     private function set_filter($name, $method_name){
         foreach((array) $this->{$name} as $filter_name => $filter){
@@ -131,6 +121,17 @@ class elizabethae{
                 }
             }
         }
+    }
+
+    private function call_method($callMethodName, $method_name){
+        $args = $this->get_method_param_from_controller($callMethodName, $method_name);
+        $this->{$callMethodName}($args);
+    }
+
+    private function get_method_param_from_controller($method_name, $from_method_name){
+        return array_merge((array) $this->{$method_name},
+                           (array) $this->{$method_name."_with_default"},
+                           (array) $this->{$method_name."_from_".$from_method_name."_with_default"});
     }
 
     function __call($function, $args) {

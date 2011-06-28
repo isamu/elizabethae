@@ -18,7 +18,7 @@ class TopologicalSort{
                 }
             }
         }
-        
+
         foreach($this->getDependencyList($classes) as $depend) {
             list($parent, $child) = each($depend);
             if(!isset($this->nodes[$parent])){

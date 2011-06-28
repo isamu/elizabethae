@@ -1,4 +1,6 @@
 <?PHP
+namespace elizabethae\plugin;
+
 class pluginBase{
     public $required = array();
     public $require = array();

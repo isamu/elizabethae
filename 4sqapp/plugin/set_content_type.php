@@ -1,1 +1,0 @@
-../../plugin/set_content_type.php

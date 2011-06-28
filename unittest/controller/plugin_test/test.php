@@ -1,4 +1,6 @@
 <?PHP
+namespace elizabethae\plugin;
+
 require_once("pluginBase.php");
 class test extends pluginBase{
     function __construct($controller){

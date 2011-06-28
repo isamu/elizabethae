@@ -1,6 +1,7 @@
 <?php
 define("APP_BASE_DIR", realpath(__DIR__."/../"));
 define("ELIZABETHAE_BASE_DIR", realpath(__DIR__."/../../"));
+require_once ELIZABETHAE_BASE_DIR . "/lib/bootstrap.php";
 require_once 'PHPUnit/Framework.php';
 
 require_once APP_BASE_DIR.'/controller/pluginParamTestController.php';

@@ -1,4 +1,6 @@
 <?PHP
+namespace elizabethae\plugin;
+
 require_once("pluginBase.php");
 class test2 extends pluginBase{
     public $before_filter = array("requires" => array("test3"),
@@ -11,8 +13,8 @@ class test2 extends pluginBase{
         $this->param = $param;
     }
     function before_filter($param){
-        if(isset($param['test'])){
-            $this->controller->data["test"][] = $param['test'];
+        if(isset($this->param['test'])){
+            $this->controller->data["test"][] = $this->param['test'];
         }
         $this->controller->data["test"][] = "test2 plugin before filter";
     }

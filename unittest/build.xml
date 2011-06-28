@@ -10,6 +10,9 @@
         <fileset dir="./controller">
           <include name="*Test.php"/>
         </fileset>
+        <fileset dir="./controller2">
+          <include name="test.php"/>
+        </fileset>
       </batchtest>
     </phpunit3>
   </target>

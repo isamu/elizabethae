@@ -1,1 +1,0 @@
-../../plugin/content_type_header.php

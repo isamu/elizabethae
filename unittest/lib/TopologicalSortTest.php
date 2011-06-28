@@ -1,7 +1,7 @@
 <?php
 require_once 'PHPUnit/Framework.php';
 
-require_once '../../lib/TopologicalSort.php';
+require_once '../../core/util/TopologicalSort.php';
 
 /**
  * Test class for TopologicalSort.
@@ -23,7 +23,7 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->ts = new TopologicalSort;
+        $this->ts = new elizabethae\util\TopologicalSort;
     }
 
     /**
@@ -50,7 +50,7 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
     /**
      * @todo Implement testSort().
      */
-    public function testSort()
+    public function testSort1()
     {
         $classes = array('init' => array("require" => array(),
                                          "required" => array()),
@@ -60,11 +60,13 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
                                               "require" => array()),
                          'getUser' => array("require" => array(),
                                             "required" => array()));
-                         
-        $this->ts->setNode($classes);        
+
+        $this->ts->setNode($classes);
         $res = $this->ts->sort();
         $this->assertEquals($res, array("init", "load_site", "load_page", "getUser"));
-        var_dump($res);
+    }
+
+    public function testSort2(){
         $classes = array("getUser" => array("require" => array(),
                                             "required" => array()),
                          "init" => array("require" => array(),
@@ -72,10 +74,12 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
                          "hoge" => array("require" => array(),
                                          "required" => array()));
 
-        $this->ts->setNode($classes);        
+        $this->ts->setNode($classes);
         $res = $this->ts->sort();
-        var_dump($res);
+        $this->assertEquals($res, array("getUser",  "init", "hoge"));
+    }
 
+    public function testSort3(){
         $classes = array('init' => array("require" => array(),
                                          "required" => array()),
                          'load_site' => array("require" => array("init"),
@@ -85,10 +89,9 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
                          'getUser' => array("require" => array(),
                                             "required" => array()));
 
-        $this->ts->setNode($classes);        
+        $this->ts->setNode($classes);
         $res = $this->ts->sort();
-        var_dump($res);
-
+        $this->assertEquals($res, array("init",  "load_site",  "load_page", "getUser"));
     }
 
     /**
@@ -118,10 +121,11 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
      */
     public function testGetNewNode()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $res = $this->ts->getNewNode("new_node_test");
+        $this->assertEquals($res,
+            array("name" => "new_node_test",
+                "children" => array(),
+                "parents" => array()));
     }
 }
 ?>

@@ -1,1 +1,0 @@
-../../plugin/render_php.php

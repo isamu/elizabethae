@@ -69,8 +69,7 @@ class elizabethae{
     private function get_plugin_initialize_param_from_controller($plugin_name, $method_name){
         return array_merge((array) $this->{$plugin_name},
                            (array) $this->{$plugin_name."_with_default"},
-                           (array) $this->{$plugin_name."_only_".$method_name},
-                           (array) $this->{$plugin_name."_with_default_only_".$method_name});
+                           (array) $this->{$plugin_name."_only_".$method_name});
     }
 
     private function set_filter($name, $method_name){

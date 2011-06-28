@@ -30,7 +30,6 @@ class testController extends \elizabethae\core\elizabethae{
 
     var $test_plugin_with_default = array("A");
     var $test_plugin_only_testAction = array("B");
-    var $test_plugin_with_default_only_ccAction = array("C");
 
     function testAction(){
         $this->test2Method();

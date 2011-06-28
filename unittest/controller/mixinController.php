@@ -18,6 +18,9 @@ class MixinController extends \elizabethae\core\elizabethae{
     function get_data(){
         return $this->data;
     }
+    public $mixin_init_param_plugin = array("init_param1");
+    public $mixin_init_param_plugin_only_init_test_func = array("init_param3");
+
 
 }
 ?>

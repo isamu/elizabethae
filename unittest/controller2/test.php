@@ -31,7 +31,7 @@ class ElizabethaeTest2 extends PHPUnit_Framework_TestCase
                             array("test" => array("plugin_test_before_filter" => true,
                                                   "plugin_test2_before_filter" => true,
                                                   "plugin_test3_before_filter" => true,
-                                                  "test_param" => array("A", "C"))));
+                                                  "test_param" => array("A"))));
 
 
     }

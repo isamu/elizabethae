@@ -44,6 +44,15 @@ class filterDependencyOnController extends \elizabethae\core\elizabethae{
     function load_page(){
         $this->data["res"][] = "load_page";
     }
+    function render(){
+        $this->data["res"][] = "render";
+    }
+    function conv_encode(){
+        $this->data["res"][] = "conv_encode";
+    }
+    function access_log(){
+        $this->data["res"][] = "access_log";
+    }
 }
 class filterDependencyTest1OnController extends filterDependencyOnController{
     public $before_filter = array(
@@ -53,6 +62,15 @@ class filterDependencyTest1OnController extends filterDependencyOnController{
             "required" => "user_auth",
         ),
         "user_auth" => array()
+    );
+
+    public $after_filter = array(
+        "render",
+        "conv_encode" => array(
+            "require" => "render",
+            "required" => "access_log",
+        ),
+        "access_log",
     );
 }
 
@@ -66,6 +84,16 @@ class filterDependencyTest2OnController extends filterDependencyOnController{
             "require" => "load_page"
         )
     );
+
+    public $after_filter = array(
+        "render" => array(
+            "required" => "conv_encode",
+        ),
+        "conv_encode",
+        "access_log" => array(
+            "require" => "conv_encode",
+        )
+    );
 }
 
 class filterDependencyTest3OnController extends filterDependencyOnController{
@@ -77,6 +105,16 @@ class filterDependencyTest3OnController extends filterDependencyOnController{
             "required" => "user_auth",
         ),
         "user_auth" => array()
+    );
+
+    public $after_filter = array(
+        "render" => array(
+            "required" => "conv_encode",
+        ),
+        "conv_encode" => array(
+            "required" => "access_log"
+        ),
+        "access_log",
     );
 }
 

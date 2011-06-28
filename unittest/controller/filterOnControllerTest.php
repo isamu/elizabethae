@@ -47,7 +47,10 @@ class filterOnControllerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($res["res"], array(
                 "load_config",
                 "load_page",
-                "user_auth"
+                "user_auth",
+                "render",
+                "conv_encode",
+                "access_log"
             ));
 
     }
@@ -58,7 +61,10 @@ class filterOnControllerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($res["res"], array(
                 "load_config",
                 "load_page",
-                "user_auth"
+                "user_auth",
+                "render",
+                "conv_encode",
+                "access_log"
             ));
 
     }
@@ -69,7 +75,10 @@ class filterOnControllerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($res["res"], array(
                 "load_config",
                 "load_page",
-                "user_auth"
+                "user_auth",
+                "render",
+                "conv_encode",
+                "access_log"
             ));
 
     }

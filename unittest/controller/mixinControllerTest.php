@@ -5,7 +5,6 @@ require_once ELIZABETHAE_BASE_DIR . "/lib/bootstrap.php";
 require_once 'PHPUnit/Framework.php';
 
 require_once APP_BASE_DIR.'/controller/mixinController.php';
-require_once APP_BASE_DIR.'/controller/mixin2Controller.php';
 
 /**
  * Test class for elizabethae.

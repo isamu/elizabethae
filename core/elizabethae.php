@@ -56,13 +56,13 @@ class elizabethae{
         }
         foreach(array("before_filter", "after_filter") as $filter){
             if(method_exists($class, $filter)){
-                $this->filters[$filter][$class_full_name] = array("type" =>"class",
+                $this->filters[$filter][$class_name] = array("type" =>"class",
                     "require" => isset($class->{$filter}["require"]) ? $class->{$filter}["require"] : "",
                     "required" => isset($class->{$filter}["required"]) ? $class->{$filter}["required"] : "");
             }
 
         }
-        $this->plugin_classes[$class_full_name] = $class;
+        $this->plugin_classes[$class_name] = $class;
     }
 
     //get plugin initialize parametor from controller

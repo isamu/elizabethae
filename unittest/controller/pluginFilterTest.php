@@ -55,4 +55,36 @@ class pluginFilterTest extends PHPUnit_Framework_TestCase
             ));
     }
 
+    public function test_filter_params(){
+        $controller = new elizabethae\controller\pluginFilterParamsController("indexAction");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "validate_rule_1"
+            ));
+
+        $controller = new elizabethae\controller\pluginFilterParamsController("my_method");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "validate_rule_1",
+                "validate_rule_my_method"
+            ));
+
+        $controller = new elizabethae\controller\pluginFilterParams2Controller("indexAction");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "validate_rule_1",
+                "validate_rule_2"
+            ));
+
+        $controller = new elizabethae\controller\pluginFilterParams2Controller("my_method2");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "validate_rule_1",
+                "validate_rule_2",
+                "validate_rule_my_method2"
+            ));
+
+
+    }
+
 }

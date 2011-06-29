@@ -49,7 +49,7 @@ class elizabethae{
 
         $class = new $class_full_name($this);
         if(method_exists($class, "init_param")){
-            $class->init_param($this->get_plugin_initialize_param_from_controller($class_name, $method_name));
+            $class->init_param($this->get_method_args_from_controller($class_name, $method_name));
         }
         if(method_exists($class, "init_data")){
             $class->init_data($this->data);
@@ -65,8 +65,8 @@ class elizabethae{
         $this->plugin_classes[$class_name] = $class;
     }
 
-    //get plugin initialize parametor from controller
-    private function get_plugin_initialize_param_from_controller($plugin_name, $method_name){
+    //get method argment parametors from controller
+    private function get_method_args_from_controller($plugin_name, $method_name){
         return array_merge((array) $this->{$plugin_name},
                            (array) $this->{$plugin_name."_with_default"},
                            (array) $this->{$plugin_name."_only_".$method_name});
@@ -112,25 +112,14 @@ class elizabethae{
     private function apply_filter($name, $sorted_filter, $method_name){
         foreach((array) $sorted_filter as $filter){
             if(isset($name) && !!$name && isset($filter) && !!$filter){
+                $args = $this->get_method_args_from_controller($filter, $method_name);
                 if($this->filters[$name][$filter]['type'] == "class"){
-                    $args = $this->get_method_param_from_controller($filter, $method_name);
                     $this->plugin_classes[$filter]->{$name}($args);
                 }else if($this->filters[$name][$filter]['type'] == "method"){
-                    $this->call_method($filter, $method_name);
+                    $this->{$filter}($args);
                 }
             }
         }
-    }
-
-    private function call_method($callMethodName, $method_name){
-        $args = $this->get_method_param_from_controller($callMethodName, $method_name);
-        $this->{$callMethodName}($args);
-    }
-
-    private function get_method_param_from_controller($method_name, $from_method_name){
-        return array_merge((array) $this->{$method_name},
-                           (array) $this->{$method_name."_with_default"},
-                           (array) $this->{$method_name."_from_".$from_method_name."_with_default"});
     }
 
     function __call($function, $args) {

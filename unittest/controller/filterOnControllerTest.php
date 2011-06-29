@@ -82,4 +82,63 @@ class filterOnControllerTest extends PHPUnit_Framework_TestCase
             ));
 
     }
+
+    public function test_filter_only_test(){
+        $controller = new elizabethae\controller\filterOnlyTestOnController("indexAction");
+        $res = $controller->get_data();
+        $this->assertNull($res["res"]);
+
+        $controller = new elizabethae\controller\filterOnlyTestOnController("my_page_action");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "load_config",
+            ));
+    }
+
+    public function test_filter2_only_test(){
+        $controller = new elizabethae\controller\filterOnlyTest2OnController("indexAction");
+        $res = $controller->get_data();
+        $this->assertNull($res["res"]);
+
+        $controller = new elizabethae\controller\filterOnlyTest2OnController("my_page_action");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "load_config",
+            ));
+
+        $controller = new elizabethae\controller\filterOnlyTest2OnController("your_page_action");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "load_config",
+            ));
+    }
+
+    public function test_filter_expect_test(){
+        $controller = new elizabethae\controller\filterExpectTestOnController("indexAction");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "load_config",
+            ));
+
+        $controller = new elizabethae\controller\filterExpectTestOnController("my_page_action");
+        $res = $controller->get_data();
+        $this->assertNull($res["res"]);
+    }
+
+    public function test_filter2_expect_test(){
+        $controller = new elizabethae\controller\filterExpectTest2OnController("indexAction");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "load_config",
+            ));
+
+        $controller = new elizabethae\controller\filterExpectTest2OnController("my_page_action");
+        $res = $controller->get_data();
+        $this->assertNull($res["res"]);
+
+        $controller = new elizabethae\controller\filterExpectTest2OnController("your_page_action");
+        $res = $controller->get_data();
+        $this->assertNull($res["res"]);
+    }
+
 }

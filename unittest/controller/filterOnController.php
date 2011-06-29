@@ -118,4 +118,45 @@ class filterDependencyTest3OnController extends filterDependencyOnController{
     );
 }
 
+class filterOnlyTestOnController extends filterDependencyOnController{
+    public $before_filter = array(
+        "load_config" => array(
+            "only" => "my_page_action"
+        ),
+    );
+}
+
+class filterOnlyTest2OnController extends filterDependencyOnController{
+    public $before_filter = array(
+        "load_config" => array(
+            "only" => array(
+                "my_page_action",
+                "your_page_action",
+            )
+        ),
+    );
+}
+
+class filterExpectTestOnController extends filterDependencyOnController{
+    public $before_filter = array(
+        "load_config" => array(
+            "expect" => "my_page_action"
+        ),
+    );
+}
+
+class filterExpectTest2OnController extends filterDependencyOnController{
+    public $before_filter = array(
+        "load_config" => array(
+            "expect" => array(
+                "my_page_action",
+                "your_page_action",
+            )
+        ),
+    );
+}
+
+
+
+
 ?>

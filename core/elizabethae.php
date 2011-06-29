@@ -87,13 +87,13 @@ class elizabethae{
     }
 
     private function is_set_filter($filter, $method_name){
-        if(isset($filter['only']) && is_array($filter['only'])){
-            if(!in_array($method_name, $filter['only'])){
+        if(isset($filter['only'])){
+            if(!in_array($method_name, (array) $filter['only'])){
                 return false;
             }
         }
-        if(isset($filter['expect']) && is_array($filter['expect'])){
-            if(in_array($method_name, $filter['expect'])){
+        if(isset($filter['expect'])){
+            if(in_array($method_name, (array) $filter['expect'])){
                 return false;
             }
         }

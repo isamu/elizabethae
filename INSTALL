@@ -1,8 +1,10 @@
-
 ## Quick Installation
+
+To start demo application.
 
 Add apache.conf
 
+-----------------------------------------------------
 <VirtualHost *:80>
 ServerName your.test.domain.example.com
 
@@ -17,7 +19,9 @@ RewriteEngine on
 </Directory>
 </VirtualHost>
 
-chmod 666 /your/elizabethae/dir/app/data/*
+-----------------------------------------------------
+
+$ chmod 666 /your/elizabethae/dir/app/data/*
 
 browse your sample site http://your.test.domain.example.com/
 

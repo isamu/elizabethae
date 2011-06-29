@@ -38,7 +38,10 @@ class TopologicalSort{
 
     function set_required(&$classes, $require, $class_name){
         if(!isset($classes[$require])){
-            return false;
+            if(empty($require)){
+                return false;
+            }
+            throw new \Exception('no dependency method');
         }
         if(isset($classes[$require]["required"]) &&
            !is_array($classes[$require]["required"])){
@@ -88,6 +91,7 @@ class TopologicalSort{
 
     function getDependencyList($classes = array()){
         $output = array();
+        //var_dump($classes);
         foreach($classes as $classname => $class){
             if(isset($class['required'])){
                 foreach((array) $class['required'] as $required){
@@ -95,6 +99,7 @@ class TopologicalSort{
                 }
             }
         }
+        //var_dump($output);
         return $output;
     }
 

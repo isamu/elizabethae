@@ -156,7 +156,10 @@ class filterExpectTest2OnController extends filterDependencyOnController{
     );
 }
 
-
-
-
-?>
+class filterMissingTestOnController extends filterDependencyOnController{
+    public $before_filter = array(
+        "load_config" => array(
+            "require" => "no_exist_function",
+        ),
+    );
+}

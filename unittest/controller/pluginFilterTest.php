@@ -68,7 +68,9 @@ class pluginFilterTest extends PHPUnit_Framework_TestCase
                 "validate_rule_1",
                 "validate_rule_my_method"
             ));
+    }
 
+    public function test_filter_params2(){
         $controller = new elizabethae\controller\pluginFilterParams2Controller("indexAction");
         $res = $controller->get_data();
         $this->assertEquals($res["res"], array(

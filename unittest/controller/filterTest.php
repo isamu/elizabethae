@@ -141,4 +141,12 @@ class filterOnControllerTest extends PHPUnit_Framework_TestCase
         $this->assertNull($res["res"]);
     }
 
+    public function test_missing_test(){
+        try {
+            $controller = new elizabethae\controller\filterMissingTestOnController("your_page_action");
+        } catch (Exception $e) {
+            $this->assertEquals($e->getMessage(), "no dependency method");
+        }
+    }
+
 }

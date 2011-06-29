@@ -30,8 +30,6 @@ class pluginFilterParamsController extends \elizabethae\core\elizabethae{
     public $plugin_validation = array("validate_rule_1");
     public $plugin_validation_only_my_method = array("validate_rule_my_method");
 
-
-
     function __construct($method_name){
         $this->plugin_dir = APP_BASE_DIR . "/controller/filter_params_plugin/";
         parent::__construct($method_name);
@@ -45,4 +43,5 @@ class pluginFilterParams2Controller extends \elizabethae\controller\pluginFilter
     public $plugin_validation_with_default = array("validate_rule_2");
     public $plugin_validation_only_my_method2 = array("validate_rule_my_method2");
 }
+
 ?>

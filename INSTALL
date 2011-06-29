@@ -1,13 +1,21 @@
-If you can edit apache.conf, add below
 
-DocumentRoot "{YOUR elizabethae DIR}/app/htdocs"
+## Quick Installation
 
-<Directory "{YOUR elizabethae DIR}/app/htdocs">
+Add apache.conf
+
+<VirtualHost *:80>
+ServerName your.test.domain.example.com
+
+DocumentRoot "/your/elizabethae/dir/app/htdocs"
+
+<Directory ""/your/elizabethae/dir/app/htdocs">
 RewriteEngine on
         RewriteCond %{REQUEST_FILENAME} !-d
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !favicon.ico$
         RewriteRule ^(.*)$ index.php [QSA,L]
 </Directory>
+</VirtualHost>
 
+browse your sample site http://your.test.domain.example.com/
 

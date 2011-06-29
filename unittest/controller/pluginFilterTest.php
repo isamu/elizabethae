@@ -29,10 +29,9 @@ class pluginFilterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * mixin test.
-     * call mixin_plugin function from controller
+     * plugin Filter Dependency test.
      */
-    public function test_call_mixin_function()
+    public function test_pluginFilterDependency()
     {
         $controller = new elizabethae\controller\pluginFilterController("indexAction");
 
@@ -47,5 +46,13 @@ class pluginFilterTest extends PHPUnit_Framework_TestCase
             ));
     }
 
+    public function test_arround_filter(){
+        $controller = new elizabethae\controller\pluginArroundFilterController("indexAction");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "arround_filter(before_filter)",
+                "arround_filter(after_filter)"
+            ));
+    }
 
 }

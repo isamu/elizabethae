@@ -44,7 +44,7 @@ class TopologicalSort{
         $sorted = array();
         while(count($this->nodes)>0) {
             if(count($root_nodes) == 0){
-                return false;
+                throw new \Exception('cyclic graph');
             }
             $n = array_pop($root_nodes);
             $sorted[] = $n['name'];

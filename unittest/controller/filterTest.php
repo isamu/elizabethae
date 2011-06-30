@@ -178,9 +178,11 @@ class filterOnControllerTest extends PHPUnit_Framework_TestCase
     }
 
     public function test_broken_dependency(){
-        $controller = new elizabethae\controller\brokenDependencyTestOnController("your_page_action");
-        $res = $controller->get_data();
-        //todo
+        try{
+            $controller = new elizabethae\controller\brokenDependencyTestOnController("your_page_action");
+        } catch (Exception $e) {
+            $this->assertEquals($e->getMessage(), "cyclic graph");
+        }
     }
 
 }

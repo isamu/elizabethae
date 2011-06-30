@@ -1,0 +1,3 @@
+[submodule "lib/vendor/bella"]
+	path = lib/vendor/bella
+	url = https://github.com/tomkrush/bella.git

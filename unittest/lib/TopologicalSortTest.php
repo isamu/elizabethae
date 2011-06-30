@@ -37,17 +37,6 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSet_required().
-     */
-    public function testSet_required()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    /**
      * @todo Implement testSort().
      */
     public function testSort1()
@@ -76,7 +65,8 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
 
         $this->ts->setNode($classes);
         $res = $this->ts->sort();
-        $this->assertEquals($res, array("getUser",  "init", "hoge"));
+        $ans = array("hoge", "init", "getUser");
+        $this->assertEquals(sort($res), sort($ans));
     }
 
     public function testSort3(){
@@ -91,30 +81,28 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
 
         $this->ts->setNode($classes);
         $res = $this->ts->sort();
-        $this->assertEquals($res, array("init",  "load_site",  "load_page", "getUser"));
+        $this->assertLessThan(array_search('load_site', $res), array_search("init", $res));
+        $this->assertLessThan(array_search("load_site", $res), array_search('getUser', $res));
     }
 
-    /**
-     * @todo Implement testGetRootNodes().
-     */
-    public function testGetRootNodes()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
+    public function testSort4(){
+        $classes = array(
+            'init' => array("require" => array(),
+                "required" => array()),
+            'getUser' => array("require" => array(),
+                "required" => array()),
+            'load_page' => array("required" => array("getUser"),
+                "require" => array()),
+            'load_site' => array("require" => array("init"),
+                "required" => array()),
         );
+
+        $this->ts->setNode($classes);
+        $res = $this->ts->sort();
+        $this->assertLessThan(array_search('load_site', $res), array_search("init", $res));
+        $this->assertLessThan(array_search("load_site", $res), array_search('getUser', $res));
     }
 
-    /**
-     * @todo Implement testGetDependencyList().
-     */
-    public function testGetDependencyList()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
 
     /**
      * @todo Implement testGetNewNode().
@@ -127,5 +115,28 @@ class TopologicalSortTest extends PHPUnit_Framework_TestCase
                 "children" => array(),
                 "parents" => array()));
     }
+
+    public function testSort10()
+    {
+        $classes = array(
+            "load_config" => array(
+            ),
+            "load_page" => array(
+                "require" => "load_config",
+            ),
+            "interrupt_filter" => array(
+                "require" => "load_config",
+                "required" => "load_page"
+            ),
+            "user_auth" => array(
+                "require" =>  "load_page"
+            ),
+        );
+
+        $this->ts->setNode($classes);
+        $res = $this->ts->sort();
+        $this->assertEquals($res, array("load_config", "interrupt_filter", "load_page", "user_auth"));
+    }
+
 }
 ?>

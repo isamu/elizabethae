@@ -54,6 +54,31 @@ class filterDependencyOnController extends \elizabethae\core\elizabethae{
         $this->data["res"][] = "access_log";
     }
 }
+
+class filterDependencyTestOnController extends filterDependencyOnController{
+    public $before_filter = array(
+        "load_config" => array(
+        ),
+        "load_page" => array(
+            "require" => "load_config",
+        ),
+        "user_auth" => array(
+            "require" =>  "load_page"
+        )
+    );
+
+    public $after_filter = array(
+        "render" => array(
+        ),
+        "conv_encode" => array(
+            "require" => "render"
+        ),
+        "access_log" => array(
+            "require" => "conv_encode",
+        ),
+    );
+}
+
 class filterDependencyTest1OnController extends filterDependencyOnController{
     public $before_filter = array(
         "load_config" => array(),
@@ -163,3 +188,30 @@ class filterMissingTestOnController extends filterDependencyOnController{
         ),
     );
 }
+
+class InterruptTestController extends filterDependencyTestOnController{
+    function __construct($method_name){
+        $this->before_filter["interrupt_filter"] = array(
+            "require" => "load_config",
+            "required" => "load_page"
+        );
+        parent::__construct($method_name);
+    }
+    function interrupt_filter(){
+        $this->data["res"][] = "interrupt_filter";
+    }
+}
+
+class brokenDependencyTestOnController extends filterDependencyOnController{
+    public $before_filter = array(
+        "load_config" => array(
+            "require" => "load_page",
+        ),
+        "load_page" => array(
+            "require" => "load_config",
+        )
+    );
+}
+
+
+

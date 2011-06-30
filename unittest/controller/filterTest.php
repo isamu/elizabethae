@@ -40,6 +40,19 @@ class filterOnControllerTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function test_filter_dependency_test(){
+        $controller = new elizabethae\controller\filterDependencyTestOnController("indexAction");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "load_config",
+                "load_page",
+                "user_auth",
+                "render",
+                "conv_encode",
+                "access_log"
+            ));
+
+    }
 
     public function test_filter_dependency1_test(){
         $controller = new elizabethae\controller\filterDependencyTest1OnController("indexAction");
@@ -147,6 +160,27 @@ class filterOnControllerTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertEquals($e->getMessage(), "no dependency method");
         }
+    }
+
+    public function test_interruput_test(){
+        $controller = new elizabethae\controller\InterruptTestController("indexAction");
+        $res = $controller->get_data();
+        $this->assertEquals($res["res"], array(
+                "load_config",
+                "interrupt_filter",
+                "load_page",
+                "user_auth",
+                "render",
+                "conv_encode",
+                "access_log"
+            ));
+
+    }
+
+    public function test_broken_dependency(){
+        $controller = new elizabethae\controller\brokenDependencyTestOnController("your_page_action");
+        $res = $controller->get_data();
+        //todo
     }
 
 }

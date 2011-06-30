@@ -10,52 +10,37 @@ class TopologicalSort{
 
     function setNode($classes = array()){
         $this->nodes = array();
-        foreach($classes  as $class_name => $class){
-            $classes["root"]["required"][] = $class_name;
-            if(isset($class["require"])){
-                foreach((array) $class["require"] as $require){
-                    $this->set_required($classes, $require, $class_name);
-                }
-            }
+        foreach(array_keys($classes) as $class_name){
+            $this->nodes[$class_name] = $this->getNewNode($class_name);
         }
-
-        foreach($this->getDependencyList($classes) as $depend) {
-            list($parent, $child) = each($depend);
-            if(!isset($this->nodes[$parent])){
-                $this->nodes[$parent] = $this->getNewNode($parent);
+        foreach($classes  as $class_name => $class){
+            if(isset($class['require'])){
+                $this->set_dependency((array) $class['require'], (array) $class_name);
             }
-            if(!isset($this->nodes[$child])){
-                $this->nodes[$child] = $this->getNewNode($child);
-            }
-            if(!in_array($child,$this->nodes[$parent]['children'])){
-                $this->nodes[$parent]['children'][] = $child;
-            }
-            if(!in_array($parent,$this->nodes[$child]['parents'])){
-                $this->nodes[$child]['parents'][] = $parent;
+            if(isset($class['required'])){
+                $this->set_dependency((array) $class_name, (array) $class['required']);
             }
         }
     }
 
-    function set_required(&$classes, $require, $class_name){
-        if(!isset($classes[$require])){
-            if(empty($require)){
-                return false;
+    function set_dependency($parents, $children){
+        foreach($parents as $parent){
+            foreach($children as $child){
+                if(!empty($parent) && !empty($child)){
+                    if(!isset($this->nodes[$parent]) || !isset($this->nodes[$child])){
+                        throw new \Exception('no dependency method');
+                    }
+                    if(!in_array($child, $this->nodes[$parent]['children'])){
+                        $this->nodes[$parent]['children'][] = $child;
+                    }
+                    $this->nodes[$child]['parents'][] = $parent;
+                }
             }
-            throw new \Exception('no dependency method');
-        }
-        if(isset($classes[$require]["required"]) &&
-           !is_array($classes[$require]["required"])){
-            $classes[$require]["required"] = array();
-        }
-        if(isset($classes[$require]["required"]) &&
-           !in_array($require, $classes[$require]["required"])){
-            $classes[$require]["required"][] = $class_name;
         }
     }
 
     function sort(){
         $root_nodes = array_values($this->getRootNodes($this->nodes));
-
         $sorted = array();
         while(count($this->nodes)>0) {
             if(count($root_nodes) == 0){
@@ -75,7 +60,6 @@ class TopologicalSort{
             }
             unset($this->nodes[$n['name']]);
         }
-        unset($sorted[0]);
         return array_values($sorted);
     }
 
@@ -86,20 +70,6 @@ class TopologicalSort{
                 $output[$name] = $node;
             }
         }
-        return $output;
-    }
-
-    function getDependencyList($classes = array()){
-        $output = array();
-        //var_dump($classes);
-        foreach($classes as $classname => $class){
-            if(isset($class['required'])){
-                foreach((array) $class['required'] as $required){
-                    $output[] = array($classname => $required);
-                }
-            }
-        }
-        //var_dump($output);
         return $output;
     }
 

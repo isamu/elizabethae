@@ -10,7 +10,7 @@ Elizabethae Sample Site
 <body>
 <div id="content">
 <h2>elizabethae wiki </h2>
-<? $this->render_body() ?>
+<?PHP echo $this->render_body() ?>
 </div>
 <b>this is template</b>
 </body>

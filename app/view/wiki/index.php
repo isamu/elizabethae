@@ -2,7 +2,7 @@
 <!--
 $(this).submit(function(event){
                      event.preventDefault();
-                     $.post("/wiki/<?= $this->controller->data['page_name']; ?>.json",
+                     $.post("/wiki/<?PHP echo $this->controller->data['page_name']; ?>.json",
                             $("form").serialize(),
                             function(res){
                                 $('#wiki_content').html(res);
@@ -13,10 +13,10 @@ $(this).submit(function(event){
 //-->
 </script>
 <div id="wiki_content">
-<?= $this->controller->data['text_html']; ?>
+<?PHP echo $this->controller->data['text_html']; ?>
 </div>
-<form action="/wiki/<?= $this->controller->data['page_name']; ?>" >
-<textarea name=text><?= $this->controller->data['text']; ?></textarea><br/>
+<form action="/wiki/<?PHP echo $this->controller->data['page_name']; ?>" >
+<textarea name=text><?PHP echo $this->controller->data['text']; ?></textarea><br/>
 <input type=hidden name="pagename" value="testpage">
 <input type="submit">
 
